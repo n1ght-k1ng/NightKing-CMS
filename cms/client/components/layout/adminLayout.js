@@ -11,7 +11,7 @@ function AdminLayout (props) {
             
         <Layout>
         <AdminNav/>
-            <Content>
+            <Content style ={{padding: '10px'}}>
 
             {props.children}
 

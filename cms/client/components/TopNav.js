@@ -1,4 +1,4 @@
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, MailOutlined, SettingOutlined , UserAddOutlined , UserOutlined} from '@ant-design/icons';
 import { Menu } from 'antd';
 import React, { useState } from 'react';
 import ToggleTheme from './ToggleTheme';
@@ -19,7 +19,7 @@ const items = [
         SignUp 
     </a>,
     key: 'signup',
-    icon: <AppstoreOutlined />,
+    icon: <UserAddOutlined />,
     // disabled: true,
   },
   {
@@ -28,7 +28,7 @@ const items = [
         SignIn 
     </a>,
     key: 'signin',
-    icon: <AppstoreOutlined />,
+    icon: <UserOutlined />,
     // disabled: true,
   },
   
@@ -88,7 +88,7 @@ const TopNav = () => {
     setCurrent(e.key);
   };
   
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} theme ="dark"/>;
 };
 
 export default TopNav;
