@@ -50,7 +50,10 @@ export const signup = async (req, res) => {
         expiresIn: "7d",
       });
 
-      //   console.log(user);
+      
+
+      console.log("user saved ",user);
+      
       const { password, ...rest } = user._doc;
       return res.json({
         token,
@@ -75,6 +78,8 @@ export const signin = async (req, res) => {
         error: "No user found",
       });
     }
+
+    
     // check password
     const match = await comparePassword(password, user.password);
     if (!match) {

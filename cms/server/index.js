@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth";
 
-const morgan = require("morgan");
+const morgan = require("morgan"); // middle ware to print details "POST /api/signup 200 375.101 ms - 380"
 
 const app = express();
 

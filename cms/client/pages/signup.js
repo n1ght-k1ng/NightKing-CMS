@@ -1,13 +1,68 @@
 import ToggleTheme from "../components/ToggleTheme";
+import {useState} from 'react'
 import { LockOutlined, UserOutlined , MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
+import axios from 'axios'
+import toast ,{Toaster } from 'react-hot-toast' 
+import { useContext } from "react";
+import {AuthContext } from "../context/auth"
+import {useRouter} from "next/router"
+ 
 
 import {Col , Row } from "antd"
 
 const FormSignup = () => {
-    const onFinish = (values) => {
+
+
+    const router = useRouter()
+    console.log(router)
+
+
+    const [auth, setAuth ] = useContext(AuthContext)
+    const [loading , setLoading] = useState(false)
+
+    
+
+    const onFinish = async (values) => {
+
       console.log('Received values of form: ', values);
+      try{
+
+        setLoading(true);
+        const {data} = await axios.post('/signup' ,values)
+        // console.log('res =>' , res)
+        
+        
+       if(data?.error){
+        toast.error(data.error);
+        setLoading(false)
+      }
+      else{
+        toast.success("Signed Up !! Welcome to NightKing-CMS");
+        console.log('signup res=>' , data)
+        setAuth(data)
+        localStorage.setItem('auth', JSON.stringify(data));
+        setLoading(false)
+        router.push('/admin')
+
+      }
+  
+
+      }
+      // if(data?.error){
+      //   toast.error(data.error);
+      // }
+      // else{
+      //   toast.success("Signed Up !! Welcome to NightKing-CMS");
+
+      // }
+      catch(err){
+        toast.error("Signup failed , Try Again.")
+        console.log(err)
+        setLoading(false)
+      };
+
     };
   
     return (
@@ -19,6 +74,7 @@ const FormSignup = () => {
         }}
         onFinish={onFinish}
       >
+        
         <Form.Item
           name="name"
           rules={[
@@ -78,7 +134,7 @@ const FormSignup = () => {
   
         <Form.Item>
             
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit" className="login-form-button" loading={loading} >
             Register
           </Button>
           <br/>
