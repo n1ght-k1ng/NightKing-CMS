@@ -1,16 +1,47 @@
 import ToggleTheme from "../components/ToggleTheme";
-import { LockOutlined, UserOutlined , MailOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined , MailOutlined, DatabaseFilled } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
-
+import React, { useContext, useState } from 'react';
+import axios from 'axios'
+import {useRouter} from 'next/router'
 import {Col , Row } from "antd"
+import toast from "react-hot-toast";
+
+import { AuthContext } from "../context/auth";
+
 const FormSignin = () => {
-    const onFinish = (values) => {
-      console.log('Received values of form: ', values);
+
+    const [auth , setAuth] = useContext(AuthContext)
+    const [loading, setloading] = useState(false)
+    const router = useRouter()
+    const [form ] = Form.useForm();
+    const onFinish = async (values) => {
+      // console.log('Received values of form: ', values);
+
+      try{
+        setloading(true)
+        const { data } = await axios.post("/signin", values)
+        console.log('SignIN response: ', data)
+        // save user and token to context 
+        setAuth(data)
+        // save user and token to local storage
+        localStorage.setItem('auth',JSON.stringify(data))
+        toast.success("Successfully Signed In - Welcome to NightKing-CMS")
+        setloading(false)
+        //redirect
+        router.push('/')
+        form.resetFields()
+      }
+      catch(err){
+          console.log(err);
+          setloading(false)
+          toast.error('SignIN failed')
+      }
     };
   
     return (
       <Form
+        form = { form }
         name="normal_login"
         className="login-form"
         initialValues={{
@@ -19,7 +50,7 @@ const FormSignin = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          name="username"
+          name="email"
           rules={[
             {
               required: true,
@@ -80,6 +111,7 @@ const FormSignin = () => {
 
 
 function signin (){
+
     return(
         <Row>
       <Col span={8} offset = {8}>

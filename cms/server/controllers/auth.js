@@ -3,7 +3,7 @@ import User from "../models/user";
 import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
-
+import toast  from "react-hot-toast"
 // sendgrid
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
@@ -68,14 +68,14 @@ export const signup = async (req, res) => {
 };
 
 export const signin = async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   try {
     const { email, password } = req.body;
     // check if our db has user with that email
     const user = await User.findOne({ email });
     if (!user) {
       return res.json({
-        error: "No user found",
+        err: "No user found",
       });
     }
 

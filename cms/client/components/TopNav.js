@@ -1,94 +1,109 @@
-import { AppstoreOutlined, MailOutlined, SettingOutlined , UserAddOutlined , UserOutlined} from '@ant-design/icons';
-import { Menu } from 'antd';
-import React, { useState } from 'react';
-import ToggleTheme from './ToggleTheme';
-import {Link} from "next/link"
-const items = [
-  {
-    
-    label: <a href="/">
-    CMS
-  </a>,
-    key: 'mail',
-    icon: <MailOutlined />,
+import { useState, useContext } from "react";
+import { Menu } from "antd";
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+  UserAddOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import ToggleTheme from "./ToggleTheme";
+import Link from "next/link";
+import { AuthContext } from "../context/auth";
+import { useRouter } from "next/router";
 
-  },
-  {
-    
-    label: <a href = "/signup">
-        SignUp 
-    </a>,
-    key: 'signup',
-    icon: <UserAddOutlined />,
-    // disabled: true,
-  },
-  {
-    // label: 'Signin',
-    label: <a href = "/signin">
-        SignIn 
-    </a>,
-    key: 'signin',
-    icon: <UserOutlined />,
-    // disabled: true,
-  },
-  
-  {
-    label: 'Dashboard',
-    key: 'dashboard',
-    style : {marginLeft:"auto"},
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: 'group',
-        label: 'Management',
-        children: [
-        //   {
-        //     label: 'Management',
-        //     key: 'setting:1',
-        //   },
-          {
-            label: <a href = "/admin">
-                Admin
-            </a>,
-            key: 'setting:2',
-          },
-        ],
-      },
-    //   {
-    //     type: 'group',
-    //     label: 'Item 2',
-    //     children: [
-    //       {
-    //         label: 'Option 3',
-    //         key: 'setting:3',
-    //       },
-    //       {
-    //         label: 'Option 4',
-    //         key: 'setting:4',
-    //       },
-    //     ],
-    //   },
-    ],
-  },
-  {
-    label: (
-        <ToggleTheme/> 
-        
-    ),
-    // style: {marginLeft: "auto"},
-    key: 'alipay',
-  },
-];
+const { SubMenu } = Menu;
 
 const TopNav = () => {
-  const [current, setCurrent] = useState('mail');
+  // context
+  const [auth, setAuth] = useContext(AuthContext);
+  // state
+  const [current, setCurrent] = useState("mail");
+  // hooks
+  const router = useRouter();
 
-  const onClick = (e) => {
-    console.log('click ', e);
+  const handleClick = (e) => {
+    console.log("click ", e);
     setCurrent(e.key);
   };
-  
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} theme ="dark"/>;
+
+  const signOut = () => {
+    // remove from local storage
+    localStorage.removeItem("auth");
+    // remove from context
+    setAuth({
+      user: null,
+      token: "",
+    });
+    // redirect to login
+    router.push("/signin");
+  };
+
+  return (
+    <Menu
+      onClick={handleClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      theme="dark"
+    >
+      <Menu.Item key="mail" icon={<MailOutlined />}>
+        <Link href="/">
+          <a>CMS</a>
+        </Link>
+      </Menu.Item>
+
+      {auth?.user === null && (
+        <>
+          <Menu.Item
+            style={{ marginLeft: "auto" }}
+            key="signup"
+            icon={<UserAddOutlined />}
+          >
+            <Link href="/signup">
+              <a>Signup</a>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="signin" icon={<UserOutlined />}>
+            <Link href="/signin">
+              <a>Signin</a>
+            </Link>
+          </Menu.Item>
+        </>
+      )}
+
+      {auth?.user !== null && (
+        <>
+          <SubMenu
+            key="SubMenu"
+            icon={<SettingOutlined />}
+            title="Dashboard"
+            style={{ marginLeft: "auto" }}
+          >
+            <Menu.ItemGroup title="Management">
+              <Menu.Item key="setting:2">
+                <Link href="/admin">
+                  <a>Admin</a>
+                </Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
+          </SubMenu>
+
+          <Menu.Item
+            onClick={() => signOut()}
+            key="signout"
+            icon={<LogoutOutlined />}
+          >
+            <a>Sign out</a>
+          </Menu.Item>
+        </>
+      )}
+
+      <Menu.Item>
+        <ToggleTheme />
+      </Menu.Item>
+    </Menu>
+  );
 };
 
 export default TopNav;

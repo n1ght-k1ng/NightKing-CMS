@@ -149,7 +149,7 @@
   
 //   export default AdminNav;
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
 import { useWindowWidth } from "@react-hook/window-size";
@@ -174,6 +174,8 @@ const AdminNav = () => {
   const [current, setCurrent] = useState("");
 
   const onlywidth = useWindowWidth()
+
+
   
 
   useEffect(() => {
@@ -192,6 +194,8 @@ const AdminNav = () => {
   },[onlywidth<650])
 
   const activeName = (name) => `${current === name && "active"}`;
+
+
 
   return (
     <Sider collapsible collapsed = {collapsed} onCollapse = {()=> setCollapsed(!collapsed) }>

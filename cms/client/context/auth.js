@@ -9,12 +9,12 @@ const AuthProvider =({children}) =>{
 
     })
 
-    if(process.browser){
-        axios.default.baseURL = process.env.NEXT_PUBLIC_API
+    if(process.server){
+        axios.defaults.baseURL = process.env.API
 
     }
     else{
-        axios.default.baseURL = process.env.API
+        axios.defaults.baseURL = process.env.NEXT_PUBLIC_API
     }
 
     useEffect(()=>{
