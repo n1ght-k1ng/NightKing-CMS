@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth";
 
+import  categoryRoutes from '../server/routes/category';
+
 const morgan = require("morgan"); // middle ware to print details "POST /api/signup 200 375.101 ms - 380"
 
 const app = express();
@@ -22,7 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev")); 
 
+
+
 // route middlewares
 app.use("/api", authRoutes);
+app.use("/api", categoryRoutes)   // category routes are now part of the endpoints
 
 app.listen(8000, () => console.log("Server running on port 8000"));

@@ -224,8 +224,8 @@ const AdminNav = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="5">
-            <Link href="/admin/post/categories">
-              <a className={activeName("/admin/post/categories")}>Categories</a>
+            <Link href="/admin/categories">
+              <a className={activeName("/admin/categories")}>Categories</a>
             </Link>
           </Menu.Item>
         </SubMenu>

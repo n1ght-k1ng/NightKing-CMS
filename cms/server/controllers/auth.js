@@ -105,7 +105,10 @@ export const signin = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
+
+  
   const { email } = req.body;
+  console.log(email);
   // find user by email
   const user = await User.findOne({ email });
   console.log("USER ===> ", user);
@@ -122,7 +125,7 @@ export const forgotPassword = async (req, res) => {
     from: process.env.EMAIL_FROM,
     to: user.email,
     subject: "Password reset code",
-    html: "<h1>Your password  reset code is: {resetCode}</h1>"
+    html: `<h1>Your password  reset code is: ${resetCode}</h1>`
   };
   // send email
   try {

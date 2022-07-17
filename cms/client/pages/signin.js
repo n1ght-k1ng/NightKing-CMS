@@ -21,6 +21,12 @@ const FormSignin = () => {
       try{
         setloading(true)
         const { data } = await axios.post("/signin", values)
+
+        if(data?.error) {
+          toast.error(data.error)
+          setloading(false)
+
+        }else{
         console.log('SignIN response: ', data)
         // save user and token to context 
         setAuth(data)
@@ -31,6 +37,7 @@ const FormSignin = () => {
         //redirect
         router.push('/')
         form.resetFields()
+        }
       }
       catch(err){
           console.log(err);
@@ -82,7 +89,7 @@ const FormSignin = () => {
 
 
         
-          <a className="login-form-forgot" href="">
+          <a className="login-form-forgot" href="/forgot-password">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
