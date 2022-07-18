@@ -35,7 +35,18 @@ const FormSignin = () => {
         toast.success("Successfully Signed In - Welcome to NightKing-CMS")
         setloading(false)
         //redirect
-        router.push('/')
+        // router.push('/')
+
+        if(data?.user?.role === 'Admin'){
+
+          router.push('/admin')
+        } 
+        else if (data?.user?.role === 'Author'){
+          router.push("/author")
+        }
+        else {
+          router.push('/subscriber')
+        }
         form.resetFields()
         }
       }

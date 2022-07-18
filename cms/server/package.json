@@ -16,13 +16,14 @@
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "express-jwt": "^6.1.0",
+    "express-jwt": "^6.1.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "nanoid": "^2.1.11",
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.19",
-    "react-hot-toast": "^2.3.0"
+    "react-hot-toast": "^2.3.0",
+    "slugify": "^1.6.5"
   }
 }
