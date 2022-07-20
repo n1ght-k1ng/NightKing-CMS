@@ -6,7 +6,10 @@ import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons"; 
 
+import axios from 'axios'
+
 import ToggleTheme from "../../components/ToggleTheme";
+// import { get } from "mongoose";
 
 
 
@@ -16,6 +19,19 @@ const {Content } = Layout;
 
 function AdminLayout (props) {
 
+
+    const getcurrentAdmin = async() => {
+        
+        try{
+            const {data } = await axios('/current-admin')
+             setLoading(false)
+
+
+        }
+        catch(err){ console.log(err) 
+        router.push('/')}
+    }
+
     // Securing routes 
     const [auth, setAuth ] = useContext(AuthContext)
 
@@ -24,16 +40,13 @@ function AdminLayout (props) {
     const router = useRouter()
 
     useEffect(() => {
+
+
         
-        if(auth?.user?.role != "admin"){
-            router.push('/')
-            
-        }
-        else {
-            setLoading(false)
-        }
+        getcurrentAdmin()
         
-    },[auth])
+        setLoading(false)        
+    },[auth?.token])
 
 
     if(loading ){

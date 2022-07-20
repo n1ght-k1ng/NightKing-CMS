@@ -10,7 +10,7 @@ const categorySchema = new Schema({
     slug:{ 
         type : 'string',
         unique: true,
-        lowercase : true
+        lowercase : true,
     }
 }, { timestamps:true})  // for create and update operations
 

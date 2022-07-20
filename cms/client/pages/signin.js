@@ -1,7 +1,7 @@
 import ToggleTheme from "../components/ToggleTheme";
 import { LockOutlined, UserOutlined , MailOutlined, DatabaseFilled } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState , useEffect} from 'react';
 import axios from 'axios'
 import {useRouter} from 'next/router'
 import {Col , Row } from "antd"
@@ -15,6 +15,12 @@ const FormSignin = () => {
     const [loading, setloading] = useState(false)
     const router = useRouter()
     const [form ] = Form.useForm();
+
+    useEffect(() => {
+          if(auth?.token){
+            router.push('/')
+          }
+    },[auth])
     const onFinish = async (values) => {
       // console.log('Received values of form: ', values);
 

@@ -22,7 +22,11 @@ const FormSignup = () => {
     const [auth, setAuth ] = useContext(AuthContext)
     const [loading , setLoading] = useState(false)
 
-    
+    useEffect(() => {
+      if(auth?.token){
+        router.push('/')
+      }
+},[auth])
 
     const onFinish = async (values) => {
 

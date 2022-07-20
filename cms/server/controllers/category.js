@@ -27,3 +27,15 @@ export const create = async(req , res ) =>{
         console.error(err);
     }
 }
+
+export const categories = async (req, res) => {
+ try{
+    const categories = await Category.find().sort({ createdAt: -1 })  // puts the latest category on the top of the list
+    res.json(categories) // to receive the category in client
+
+    }
+
+catch (err) {
+    console.error(err);
+}
+}
