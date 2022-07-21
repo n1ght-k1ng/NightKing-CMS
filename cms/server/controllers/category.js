@@ -15,7 +15,7 @@ export const create = async(req , res ) =>{
 
         console.log(' req user ' + JSON.stringify(req.user))
 
-        console.log(' category ' + JSON.stringify(category))
+        console.log(' category ' + JSON.stringify(category)) 
 
         res.json(category) // to receive the category in client
         
@@ -38,4 +38,34 @@ export const categories = async (req, res) => {
 catch (err) {
     console.error(err);
 }
+}
+
+export const removeCategory = async (req , res ) => {
+    try{
+        const { slug } = req.params;  // slug destructured from request params
+        const category = await Category.findOneAndDelete({ slug}) // func to find and delete the category
+        res.json(category) // to receive the category in client
+
+    }
+    catch (err) {
+        console.error(err);
+    }
+}
+
+
+export const updateCategory = async (req , res ) => {
+    try{
+
+        const { slug } = req.params; // slug destructured from request params
+        const { name } = req.body; // name destructured from request params
+        const category = await Category.findOneAndUpdate(
+            { slug },
+            { name, slug: slugify(name)},
+            {new : true }   // new updates the cateegory 
+            ) // func to update    the category
+    
+        res.json(category)
+
+    }
+    catch (err) {   console.log(err); }
 }

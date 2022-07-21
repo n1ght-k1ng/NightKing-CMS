@@ -215,12 +215,12 @@ const AdminNav = () => {
         <SubMenu key="2" icon={<PushpinOutlined />} title="Posts">
           <Menu.Item key="3">
             <Link href="/admin/posts">
-              <a className={activeName("/admin/post")}>All Posts</a>
+              <a className={activeName("/admin/posts")}>All Posts</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <Link href="/admin/post/new">
-              <a className={activeName("/admin/post/new")}>Add New</a>
+            <Link href="/admin/posts/new">
+              <a className={activeName("/admin/posts/new")}>Add New</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="5">

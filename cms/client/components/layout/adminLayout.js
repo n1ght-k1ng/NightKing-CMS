@@ -18,12 +18,22 @@ const {Content } = Layout;
 
 
 function AdminLayout (props) {
+    const [auth, setAuth ] = useContext(AuthContext)
+    const [loading , setLoading ] = useState(true)
 
+    useEffect(() => {
+
+
+        
+        if(auth?.token) getcurrentAdmin()
+        
+        setLoading(false)        
+    },[auth?.token])
 
     const getcurrentAdmin = async() => {
         
         try{
-            const {data } = await axios('/current-admin')
+            const {data } = await axios.get('/current-admin')
              setLoading(false)
 
 
@@ -33,20 +43,13 @@ function AdminLayout (props) {
     }
 
     // Securing routes 
-    const [auth, setAuth ] = useContext(AuthContext)
+   
 
-    const [loading , setLoading ] = useState(true)
+ 
 
     const router = useRouter()
 
-    useEffect(() => {
-
-
-        
-        getcurrentAdmin()
-        
-        setLoading(false)        
-    },[auth?.token])
+  
 
 
     if(loading ){

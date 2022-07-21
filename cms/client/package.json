@@ -17,10 +17,12 @@
     "@react-hook/window-size": "^3.0.7",
     "antd": "^4.21.5",
     "axios": "^0.27.2",
-    "mongoose": "^6.4.5",
+    "mongodb-client-encryption": "^2.1.0",
+    "mongoose": "^6.4.6",
     "next": "^12.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.3.0"
+    "react-hot-toast": "^2.3.0",
+    "rich-markdown-editor": "^11.21.3"
   }
 }
