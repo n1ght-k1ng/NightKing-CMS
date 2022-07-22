@@ -7,9 +7,42 @@ import { useRef , useState } from "react";
 import { ThemeContext } from "../../../context/theme";
 import axios from  'axios';
 import ToggleTheme from "../../../components/ToggleTheme";
+import Resizer from 'react-image-file-resizer';
 // const {Content , Sider} = Layout;
 
 const { Option} = Select
+
+
+const ResizeFile = (file) => 
+    new Promise((resolve)=>{
+        Resizer.imageFileResizer(
+            file,
+            7200,
+            400,
+            "JPEG",
+            100,
+            0,
+            (uri) => {resolve(uri)},
+            "base64",
+        )
+
+    })
+
+
+const uploadImage = async (file) => {
+
+    try{
+        const image = await ResizeFile(file);
+        console.log("image b64" , image);
+        
+        const { data }  = await axios.post("/upload-image" , {image})
+        console.log("Uploaded image: " + data)
+        return data.url
+    }
+    catch(err) {   console.log(err) }
+
+
+}
 
 function NewPost () {
 
@@ -101,9 +134,9 @@ const loadCategories = async () =>{
           
            plugins: [
             
-             'advlist', 'autolink', 'lists', 'link' ,'image', 'charmap', 'print', 'preview', 'anchor',
+             'advlist', 'autolink', 'lists', 'link' ,'image', 'charmap','preview', 'anchor',
              'searchreplace', 'visualblocks', 'code' ,'fullscreen',
-             'insertdatetime' ,'media' ,'table', 'paste' ,'code' ,'help' ,'wordcount'
+             'insertdatetime' ,'media' ,'table', 'code' ,'help' ,'wordcount'
              
            ],
            toolbar: 'undo redo | link image | code | formatselect | ' +
@@ -111,11 +144,28 @@ const loadCategories = async () =>{
            'alignright alignjustify | bullist numlist outdent indent | ' + 
            'removeformat | help',
            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-           file_picker_types: 'file image media',
-           images_upload_url: 'postAcceptor.php'
-         }}
+           file_picker_types: "file image media",
+           images_upload_url: ``,
+           block_unsupported_drop: false,
+        //    file_picker_callback: (callback, value, meta) => {
+        //     // Provide file and text for the link dialog
+        //     if (meta.filetype == 'file') {
+        //       callback('mypage.html', { text: 'My text' });
+        //     }
+        
+        //     // Provide image and alt text for the image dialog
+        //     if (meta.filetype == 'image') {
+        //       callback('myimage.jpg', { alt: 'My alt text' });
+        //     }
+        
+        //     // Provide alternative source and posted for the media dialog
+        //     if (meta.filetype == 'media') {
+        //       callback('movie.mp4', { source2: 'alt.ogg', poster: 'image.jpg' });
+        //     }
+        //   }
+             }}
          initialValue={initialText}
-         uplaodImage={(file) => console.log(file)}
+         
          onEditorChange={(newText) => {
             
             setText(newText)
@@ -150,3 +200,5 @@ const loadCategories = async () =>{
 }
 
 export default NewPost;
+
+
