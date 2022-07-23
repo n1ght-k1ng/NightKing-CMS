@@ -1,4 +1,4 @@
-import {Button,Row , Col ,Input , Select} from "antd"
+import {Button,Row , Col ,Input , Select ,Modal} from "antd"
 import AdminLayout from "../../../components/layout/adminLayout";
 import { useContext ,useEffect } from "react";
 
@@ -8,43 +8,108 @@ import { ThemeContext } from "../../../context/theme";
 import axios from  'axios';
 import ToggleTheme from "../../../components/ToggleTheme";
 import Resizer from 'react-image-file-resizer';
+import { set } from "mongoose";
+import { typeFromAST } from "graphql";
+import { useRouter } from "next/router";
+import toast from 'react-hot-toast'
 // const {Content , Sider} = Layout;
 
 const { Option} = Select
 
 
-const ResizeFile = (file) => 
-    new Promise((resolve)=>{
-        Resizer.imageFileResizer(
-            file,
-            7200,
-            400,
-            "JPEG",
-            100,
-            0,
-            (uri) => {resolve(uri)},
-            "base64",
-        )
 
-    })
+// const ResizeFile = (file) => 
+//     new Promise((resolve)=>{
+//         Resizer.imageFileResizer(
+//             file,
+//             7200,
+//             400,
+//             "JPEG",
+//             100,
+//             0,
+//             (uri) => {resolve(uri)},
+//             "base64",
+//         )
 
+//     })
+// const handlePublish = async () => {
 
-const uploadImage = async (file) => {
+//     try{
+//         const { data } = await axios.post("/create-post", {
+//             title,
+//             initialValuee,
+//             categories,
+//         })
 
-    try{
-        const image = await ResizeFile(file);
-        console.log("image b64" , image);
+//         if(data?.error)
+//         {
+//             toast.error(data?.error);
+
+//         }
+
+//         else{
+//             console.log("POST PUBLISH RESS  =>", data )
+//             toast.success("Post Created Successfully");
+//             localStorage.removeItem("post-title");
+//             localStorage.removeItem("post-content");
+//             router.push("/admin/post")
+//             setCategories([])
+//         }
+
+//     }
+//     catch(err){   console.log(err) 
+//     toast.error("Post Publish Failed")  }
+// }
+
+// const uploadImage = async (file) => {
+
+//     try{
+//         const image = await ResizeFile(file);
+//         console.log("image b64" , image);
         
-        const { data }  = await axios.post("/upload-image" , {image})
-        console.log("Uploaded image: " + data)
-        return data.url
-    }
-    catch(err) {   console.log(err) }
+//         const { data }  = await axios.post("/upload-image" , {image})
+//         console.log("Uploaded image: " + data)
+//         return data.url
+//     }
+//     catch(err) {   console.log(err) }
 
 
-}
+// }
 
 function NewPost () {
+
+    const router = useRouter()
+
+
+    const handlePublish = async () => {
+
+        try{
+            const { data } = await axios.post("/create-post", {
+                title,
+                initialValuee,
+                categories,
+            })
+    
+            if(data?.error)
+            {
+                toast.error(data?.error);
+    
+            }
+    
+            else{
+                console.log("POST PUBLISH RESS  =>", data )
+                toast.success("Post Created Successfully");
+                localStorage.removeItem("post-title");
+                localStorage.removeItem("post-content");
+                router.push("/admin/post")
+                setCategories([])
+            }
+    
+        }
+        catch(err){   console.log(err) 
+        toast.error("Post Publish Failed")  }
+    }
+    
 
     // load from local storage
 
@@ -64,8 +129,29 @@ function NewPost () {
             if(localStorage.getItem('post-content')){
                 return (JSON.parse(localStorage.getItem('post-content')));
             }
+            else {
+                return "This is your initial text"
+            }
         }
     }
+    const [initialValuee, setInitialValuee] = useState(undefined);
+
+    useEffect(() => {
+        if(process.browser)
+        {
+            if(localStorage.getItem('post-content'))
+            {
+                 setInitialValuee(JSON.parse(localStorage.getItem('post-content')))
+            }
+
+            else{
+                setInitialValuee('<p> Welcome to NightKing-CMS </p>')
+    
+            }
+        }
+       
+},[])
+        
 
     const editorRef = useRef(null);
     const log = () => {
@@ -82,6 +168,7 @@ const [title , setTitle] = useState(saveTitle());
 
 const [ categories, setCategories] = useState([]);
 const [loadedCategories, setLoadedCategories] = useState([]);
+const [visible, setVisible] = useState(false);
 
 useEffect(()=>{
 
@@ -126,7 +213,7 @@ const loadCategories = async () =>{
          init={{
            
             selector: 'textarea',  
-            skin: `oxide-${theme}`,
+            skin: `oxide-dark`,
             content_css: 'dark',
             menubar:true ,
         //    height: 500,
@@ -145,7 +232,8 @@ const loadCategories = async () =>{
            'removeformat | help',
            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
            file_picker_types: "file image media",
-           images_upload_url: ``,
+        //    images_file_types: 'jpg,svg,webp',
+           
            block_unsupported_drop: false,
         //    file_picker_callback: (callback, value, meta) => {
         //     // Provide file and text for the link dialog
@@ -164,20 +252,27 @@ const loadCategories = async () =>{
         //     }
         //   }
              }}
-         initialValue={initialText}
+        initialValue={initialValuee}
          
          onEditorChange={(newText) => {
             
             setText(newText)
             localStorage.setItem('post-content' , JSON.stringify(newText))
          }}
+        //  onInit={
+        //     initialValue={initialValuee}
+        //  }
          
+
        />
        
-       <pre>{ JSON.stringify((loadedCategories), null ,4)}</pre>
+      
 
             </Col>
             <Col span={6} offset = {1}>
+                <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} onClick={()=> setVisible(true)}> Preview
+
+                </Button>
                 <h4> Categories </h4>
                 <Select
                 mode = 'multiple'
@@ -189,7 +284,41 @@ const loadCategories = async () =>{
                     {loadedCategories.map((item) => <Option key= {item.name}>{item.name}</Option>)}
 
                 </Select>
+
+                <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} type = "primary" onClick={handlePublish}> Publish
+
+                </Button>
             </Col>
+            <Modal title="Preview"
+            centered
+            visible={visible}
+            onOk={() => setVisible(false)}
+            onCancel={() => setVisible(false)}
+            footer = "null"
+            width ={720}
+
+
+
+            >
+                <h1> {title} </h1>
+                <Editor
+            init={{
+            selector: 'textarea',  
+            skin: `oxide-dark`,
+            content_css: 'dark',
+            menubar:false,
+            readonly: true
+            }}
+            toolbar = "false"
+            initialValue = {initialValuee}
+            
+
+            >
+                </Editor>
+            </Modal>
+                
+
+           
         </Row>
        
 
@@ -198,6 +327,7 @@ const loadCategories = async () =>{
           
     )
 }
+
 
 export default NewPost;
 
