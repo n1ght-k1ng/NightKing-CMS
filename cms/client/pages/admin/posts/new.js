@@ -18,20 +18,20 @@ const { Option} = Select
 
 
 
-// const ResizeFile = (file) => 
-//     new Promise((resolve)=>{
-//         Resizer.imageFileResizer(
-//             file,
-//             7200,
-//             400,
-//             "JPEG",
-//             100,
-//             0,
-//             (uri) => {resolve(uri)},
-//             "base64",
-//         )
+const ResizeFile = (file) => 
+    new Promise((resolve)=>{
+        Resizer.imageFileResizer(
+            file,
+            7200,
+            400,
+            "JPEG",
+            100,
+            0,
+            (uri) => {resolve(uri)},
+            "base64",
+        )
 
-//     })
+    })
 // const handlePublish = async () => {
 
 //     try{
@@ -61,20 +61,20 @@ const { Option} = Select
 //     toast.error("Post Publish Failed")  }
 // }
 
-// const uploadImage = async (file) => {
+const uploadImage = async (file) => {
 
-//     try{
-//         const image = await ResizeFile(file);
-//         console.log("image b64" , image);
+    try{
+        const image = await ResizeFile(file);
+        console.log("image b64" , image);
         
-//         const { data }  = await axios.post("/upload-image" , {image})
-//         console.log("Uploaded image: " + data)
-//         return data.url
-//     }
-//     catch(err) {   console.log(err) }
+        const { data }  = await axios.post("/upload-image" , {image})
+        console.log("Uploaded image: " + data)
+        return data.url
+    }
+    catch(err) {   console.log(err) }
 
 
-// }
+}
 
 function NewPost () {
 
@@ -82,6 +82,8 @@ function NewPost () {
 
 
     const handlePublish = async () => {
+
+        setLoading(true);
 
         try{
             const { data } = await axios.post("/create-post", {
@@ -93,6 +95,7 @@ function NewPost () {
             if(data?.error)
             {
                 toast.error(data?.error);
+                setLoading(false);
     
             }
     
@@ -101,13 +104,18 @@ function NewPost () {
                 toast.success("Post Created Successfully");
                 localStorage.removeItem("post-title");
                 localStorage.removeItem("post-content");
-                router.push("/admin/post")
+                router.push("/admin/posts")
                 setCategories([])
+                setLoading(false)
             }
     
         }
-        catch(err){   console.log(err) 
-        toast.error("Post Publish Failed")  }
+        catch(err){   
+            
+        console.log(err) 
+        toast.error("Post Publish Failed")
+        setLoading(false
+            ) }
     }
     
 
@@ -169,6 +177,7 @@ const [title , setTitle] = useState(saveTitle());
 const [ categories, setCategories] = useState([]);
 const [loadedCategories, setLoadedCategories] = useState([]);
 const [visible, setVisible] = useState(false);
+const [loading, setLoading] = useState(false);
 
 useEffect(()=>{
 
@@ -232,7 +241,8 @@ const loadCategories = async () =>{
            'removeformat | help',
            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
            file_picker_types: "file image media",
-        //    images_file_types: 'jpg,svg,webp',
+        //    images_upload_url: `${uploadImage()}`,
+        //    automatic_uploads: true,
            
            block_unsupported_drop: false,
         //    file_picker_callback: (callback, value, meta) => {
@@ -285,7 +295,7 @@ const loadCategories = async () =>{
 
                 </Select>
 
-                <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} type = "primary" onClick={handlePublish}> Publish
+                <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} type = "primary" loading = {loading} onClick={handlePublish}> Publish
 
                 </Button>
             </Col>

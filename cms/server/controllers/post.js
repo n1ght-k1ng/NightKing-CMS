@@ -24,7 +24,7 @@ export const uploadImage = async(req, res) => {
 export const createPost = async (req ,res) =>{
     try{
         
-        const {title,initialValuee,categories} = req.body
+        const { title,initialValuee,categories } = req.body
 
 
 
@@ -79,3 +79,12 @@ export const createPost = async (req ,res) =>{
     }
     catch(err) { console.log(err) }
 }
+
+export const posts = async (req, res) => {
+        try{
+            const all = await Post.find().populate("postedBy", "name").populate("categories", "name slug").sort({createdAt: -1})
+            res.json(all)
+        }
+
+        catch(err) { console.log(err) }
+    }

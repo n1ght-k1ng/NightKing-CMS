@@ -3,8 +3,9 @@ import AdminLayout from "../../../components/layout/adminLayout";
 import { EditOutlined } from "@ant-design/icons";
 import axios from 'axios'
 import {toast} from 'react-hot-toast' 
+import { PostContext } from "../../../context/post";
 
-import {useState , useEffect} from  'react'
+import {useState , useEffect , useContext } from 'react'
 // import ToggleTheme from "../../components/ToggleTheme";
 // const {Content , Sider} = Layout;
 import CategoryUpdateModal from "../../../components/modal/CategoryUpdateModal";
@@ -18,7 +19,8 @@ function Categories () {
     
     const [form ] = Form.useForm()
 
-    const [categories , setCategories] = useState([])
+    const [post  , setPost] = useContext(PostContext)
+    const { categories  } = post
     
     const [updatingCategory , SetUpdatingCategory] = useState({})
 
@@ -31,7 +33,7 @@ function Categories () {
     const getCategories = async function () {
         try{
             const { data } = await axios.get('/categories')
-            setCategories(data)
+            setPost((prev) => ({...prev, categories: data}))
         
         }
         catch(err) {
@@ -42,7 +44,8 @@ function Categories () {
     const handledelete = async (item ) => {
             try{
                 const { data } = await axios.delete(`/category/${item.slug}`)
-                setCategories(categories.filter((cat) => cat._id != data._id)) // function gets access to each category and compares each id and removes it from the category list
+                // setCategories(categories.filter((cat) => cat._id != data._id)) // function gets access to each category and compares each id and removes it from the category list
+                setPost(prev => ({...prev, categories: categories.filter((cat) => cat._id != data._id)}))
                 toast.success("Category deleted successfully")     
             }
             catch(err)  {
@@ -72,7 +75,7 @@ function Categories () {
 
             }) 
 
-            setCategories(newCategories)
+            setPost(prev => ({...prev, categories: newCategories}))
             toast.success("category updated successfully")
             setVisible(false)
             SetUpdatingCategory({})
@@ -93,7 +96,7 @@ function Categories () {
             const {data } = await axios.post('/category' , values)
             console.log(data)
             toast.success("Category successfully created")
-            setCategories([ data, ...categories])
+            setPost((prev) =>({...prev, categories: [data, ...categories]}))
             setLoading(false)
             form.resetFields()
 

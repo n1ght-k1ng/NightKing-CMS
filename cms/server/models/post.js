@@ -11,7 +11,7 @@ const postSchema = new Schema(
     },
     initialValuee:{},
     categories: [
-        {type: ObjectId, ref:  'Category'}
+        {type: ObjectId, ref: 'Category'}
     ],
     published: { type: Boolean , default: true},
     postedBy: { type: ObjectId, ref: 'User'},

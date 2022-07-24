@@ -9,11 +9,12 @@ const router = express.Router();
 
 // controllers
 
-import {uploadImage , createPost} from "../controllers/post"
+import {uploadImage , createPost , posts} from "../controllers/post"
 
  
 router.post('/post',requireSignIn,isAdmin,uploadImage)
 router.post("/create-post",requireSignIn,isAdmin, createPost)
+router.get("/post", posts)
 
 
 

@@ -15,5 +15,5 @@ const categorySchema = new Schema(
   },
   { timestamps: true }
 );
-
+mongoose.models={}
 export default mongoose.model("Category", categorySchema);

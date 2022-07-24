@@ -1,5 +1,7 @@
 // import "antd/dist/antd.css"
 import {ThemeProvider} from "../context/theme"
+// import { CategoryProvider } from "../context/category";
+import { PostProvider } from "../context/post";
 import TopNav from "../components/TopNav"
 import '../public/styles/styles.css';
 import {Toaster} from 'react-hot-toast'
@@ -10,10 +12,14 @@ function MyApp({Component , pageProps }){
     return (
     <ThemeProvider>
         <AuthProvider>
+            <PostProvider>
+                {/* <CategoryProvider> */}
         <Toaster/>
         <TopNav/>
 
         <Component{...pageProps} />
+               
+            </PostProvider>
         </AuthProvider>
         
     </ThemeProvider>
