@@ -1,4 +1,4 @@
-import {Button,Row , Col ,Input , Select ,Modal} from "antd"
+import {Button,Row , Col ,Input , Select ,Modal, Image} from "antd"
 import AdminLayout from "../../../components/layout/adminLayout";
 import { useContext ,useEffect } from "react";
 
@@ -8,10 +8,14 @@ import { ThemeContext } from "../../../context/theme";
 import axios from  'axios';
 import ToggleTheme from "../../../components/ToggleTheme";
 import Resizer from 'react-image-file-resizer';
-import { set } from "mongoose";
-import { typeFromAST } from "graphql";
+
 import { useRouter } from "next/router";
 import toast from 'react-hot-toast'
+import {UploadOutLined} from "@ant-design/icons"
+import React from "react";
+import Media from "../../../components/media/index"
+import {MediaContext} from "../../../context/media"
+import { shouldWriteResult } from "@apollo/client/core/QueryInfo";
 // const {Content , Sider} = Layout;
 
 const { Option} = Select
@@ -90,6 +94,7 @@ function NewPost () {
                 title,
                 initialValuee,
                 categories,
+                featuredImage: media?.selected?._id
             })
     
             if(data?.error)
@@ -103,6 +108,7 @@ function NewPost () {
                 console.log("POST PUBLISH RESS  =>", data )
                 toast.success("Post Created Successfully");
                 localStorage.removeItem("post-title");
+                setMedia({...media , selected: ""})
                 localStorage.removeItem("post-content");
                 router.push("/admin/posts")
                 setCategories([])
@@ -170,13 +176,15 @@ function NewPost () {
 
     const [ theme, setTheme] = useContext(ThemeContext)
     
-    const initialText = 'Welcome to NightKing-CMS';
+const initialText = 'Welcome to NightKing-CMS';
+const [media , setMedia] = useContext(MediaContext)
 const [text, setText] = useState(saveContent());
 const [title , setTitle] = useState(saveTitle());
 
 const [ categories, setCategories] = useState([]);
 const [loadedCategories, setLoadedCategories] = useState([]);
 const [visible, setVisible] = useState(false);
+const [ModalVisible , setModalVisible] = useState(false);
 const [loading, setLoading] = useState(false);
 
 useEffect(()=>{
@@ -280,6 +288,7 @@ const loadCategories = async () =>{
 
             </Col>
             <Col span={6} offset = {1}>
+                
                 <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} onClick={()=> setVisible(true)}> Preview
 
                 </Button>
@@ -294,6 +303,34 @@ const loadCategories = async () =>{
                     {loadedCategories.map((item) => <Option key= {item.name}>{item.name}</Option>)}
 
                 </Select>
+                <br/>
+                <br/>
+
+                {media?.selected && (
+                    <Image width = '100%' src= {media?.selected?.url}/>
+                )}
+
+                <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} onClick = {() => setMedia({...media , showMediaModal: true})}  >
+
+                     Featured Image
+
+                </Button>
+
+            <Modal title="Media"
+            
+            visible={media.showMediaModal}
+            onOk={() => setMedia({...media, showMediaModal: false})}
+            onCancel={() => setMedia({...media, showMediaModal: false})}
+            footer = {null}
+            width ={720}
+
+
+
+            >
+                <Media/>
+
+
+            </Modal>
 
                 <Button style={{margin: "10px 0px 10px 0px", width: "100%"}} type = "primary" loading = {loading} onClick={handlePublish}> Publish
 
@@ -304,7 +341,7 @@ const loadCategories = async () =>{
             visible={visible}
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
-            footer = "null"
+            footer = {null}
             width ={720}
 
 
@@ -317,10 +354,10 @@ const loadCategories = async () =>{
             skin: `oxide-dark`,
             content_css: 'dark',
             menubar:false,
-            readonly: true
+            readonly: true,
             }}
             toolbar = "false"
-            initialValue = {initialValuee}
+            initialValue = {text}
             
 
             >

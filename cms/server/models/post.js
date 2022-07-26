@@ -15,6 +15,7 @@ const postSchema = new Schema(
     ],
     published: { type: Boolean , default: true},
     postedBy: { type: ObjectId, ref: 'User'},
+    featuredImage:{ type: ObjectId, ref: 'Media'},
     slug: {
       type: String,
       unique: true,

@@ -2,3 +2,11 @@
     color: aqua !important;
     text-decoration: bold ;
 }
+
+.ant-upload-list-item-card-actions {
+    display: none;
+  }
+
+.ant.upload-drag{
+    height: 150px !important
+}

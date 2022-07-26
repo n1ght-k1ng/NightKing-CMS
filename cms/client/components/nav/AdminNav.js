@@ -233,13 +233,13 @@ const AdminNav = () => {
         {/* library */}
         <SubMenu key="6" icon={<CameraOutlined />} title="Media">
           <Menu.Item key="7">
-            <Link href="/admin/media/library">
-              <a className={activeName("/admin/media/library")}>Library</a>
+            <Link href="/admin/media/MediaLibrary">
+              <a className={activeName("/admin/media/medialibrary")}>Library</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="8">
-            <Link href="/admin/media/new">
-              <a className={activeName("/admin/media/new")}>Add New</a>
+            <Link href="/admin/media/UploadFile">
+              <a className={activeName("/admin/media/UploadFile")}>Add New</a>
             </Link>
           </Menu.Item>
         </SubMenu>
