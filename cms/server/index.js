@@ -3,7 +3,7 @@ require("dotenv").config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-
+import next from '../client/node_modules/next'
 import authRoutes from "./routes/auth";
 
 import  categoryRoutes from '../server/routes/category';

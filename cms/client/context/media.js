@@ -7,7 +7,7 @@ const MediaProvider = (props) => {
     const[Media, setMedia] = useState(   // Using the same variable name everywhere is needed
          {
             images: [],
-            selected: '',
+            selected: null,
             showMediaModal: false
 
         }

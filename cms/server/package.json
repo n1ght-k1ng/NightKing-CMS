@@ -23,6 +23,7 @@
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
     "nanoid": "^2.1.11",
+    "next-transpile-modules": "^9.0.0",
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.19",
     "react-hot-toast": "^2.3.0",

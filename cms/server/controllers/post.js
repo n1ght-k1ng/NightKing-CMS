@@ -84,7 +84,11 @@ export const createPost = async (req ,res) =>{
 
 export const posts = async (req, res) => {
         try{
-            const all = await Post.find().populate("postedBy", "name").populate("categories", "name slug").sort({createdAt: -1})
+            const all = await Post.find()
+            .populate('featuredImage')
+            .populate("postedBy", "name")
+            .populate("categories", "name slug")
+            .sort({createdAt: -1})
             res.json(all)
         }
 
@@ -125,6 +129,18 @@ export const removeMedia = async (req, res) => {
         res.json({ok: true})
         
 
+    }
+    catch(err) { console.log(err) }
+}
+
+export const SinglePost = async (req, res) => {
+    try{
+        const {slug} = req.params
+        const post = await Post.findOne({slug: slug})
+        .populate("postedBy", "name")
+        .populate("categories", "name slug")
+        .populate("featuredImage", "url")
+        res.json(post)
     }
     catch(err) { console.log(err) }
 }

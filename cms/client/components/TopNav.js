@@ -7,6 +7,7 @@ import {
   UserAddOutlined,
   UserOutlined,
   LogoutOutlined,
+  DatabaseOutlined,
 } from "@ant-design/icons";
 import ToggleTheme from "./ToggleTheme";
 import Link from "next/link";
@@ -60,9 +61,14 @@ const TopNav = () => {
       mode="horizontal"
       theme="dark"
     >
-      <Menu.Item key="mail" icon={<MailOutlined />}>
+      <Menu.Item key="mail" icon={<AppstoreOutlined />}>
         <Link href="/">
           <a>CMS</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="posts" icon={<DatabaseOutlined />}>
+        <Link href="/posts">
+          <a>Posts</a>
         </Link>
       </Menu.Item>
 

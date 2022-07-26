@@ -15,7 +15,7 @@ import {UploadOutLined} from "@ant-design/icons"
 import React from "react";
 import Media from "../../../components/media/index"
 import {MediaContext} from "../../../context/media"
-import { shouldWriteResult } from "@apollo/client/core/QueryInfo";
+
 // const {Content , Sider} = Layout;
 
 const { Option} = Select

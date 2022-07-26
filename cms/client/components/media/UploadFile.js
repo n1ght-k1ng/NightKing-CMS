@@ -9,9 +9,7 @@ import React from "react"
 import { MediaContext } from "../../context/media"
 
 
-import ToggleTheme from "../ToggleTheme";
 
-import { from } from "@apollo/client";
 // const {Content , Sider} = Layout;
 
 function UploadFile () {
