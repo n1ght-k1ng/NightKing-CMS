@@ -24,7 +24,7 @@ function Posts () {
 
     const fetchposts = async () => {
         try{
-            const { data } = await axios.get('/post')
+            const { data } = await axios.get('/posts')
             setPost((prev) =>   ( {...prev,posts:data}) ) // updating the previous pre
             
 

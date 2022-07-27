@@ -9,7 +9,7 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-    initialValuee:{},
+    text:{},
     categories: [
         {type: ObjectId, ref: 'Category'}
     ],

@@ -25,7 +25,7 @@ export const uploadImage = async(req, res) => {
 export const createPost = async (req ,res) =>{
     try{
         
-        const { title,initialValuee,categories } = req.body
+        const { title,text,categories } = req.body
 
 
 
@@ -137,6 +137,8 @@ export const SinglePost = async (req, res) => {
     try{
         const {slug} = req.params
         const post = await Post.findOne({slug: slug})
+        // 
+        // .populate("initialValuee")
         .populate("postedBy", "name")
         .populate("categories", "name slug")
         .populate("featuredImage", "url")

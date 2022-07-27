@@ -92,7 +92,7 @@ function NewPost () {
         try{
             const { data } = await axios.post("/create-post", {
                 title,
-                initialValuee,
+                text,
                 categories,
                 featuredImage: media?.selected?._id
             })
