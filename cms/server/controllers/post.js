@@ -146,3 +146,48 @@ export const SinglePost = async (req, res) => {
     }
     catch(err) { console.log(err) }
 }
+
+export const removePost = async (req, res) => {
+    try{
+
+        const { postId } = req.params
+        const post = await Post.findByIdAndDelete(req.params.postId)
+        res.json({ok: true})
+    }
+    catch(err) { console.log(err) }
+}
+
+export const updatePost = async (req, res) => {
+    try{
+        const { postId } = req.params
+        const { title , content , featuredImage , categories} = req.body
+        let ids = []
+
+
+        for(let i =0 ; i< categories.length; i++) {
+            Category.findOne({
+                name: categories[i]
+                        }).exec((err,data)=>{
+                            if(err) return console.error(err);
+                            ids.push(data._id);
+                        })  // e
+                // ids.push(Category.id)
+
+        }
+        setTimeout(async ()=> {
+            const post = await Post.findByIdAndUpdate(postId, {
+                title , slug: slugify(title) , content , categories: ids , featuredImage
+            },{new : true}
+            ).populate('postedBy', 'name' )
+            .populate('categories', ' name slug')
+            .populate('featuredImage', 'url')
+            res.json(post)
+
+        },1000)
+
+        
+        
+
+    }
+    catch(err) { console.log(err) }
+}

@@ -4,6 +4,7 @@ import { PostContext } from '../../../context/post';
 import { Button , Row , Col, List  } from "antd";
 import AdminLayout from "../../../components/layout/adminLayout";
 import Link  from 'next/link'
+import { useRouter } from 'next/router';
 import { BorderHorizontalOutlined, PlusOutlined } from "@ant-design/icons";
 
 // const {Content , Sider} = Layout;
@@ -13,7 +14,7 @@ import { BorderHorizontalOutlined, PlusOutlined } from "@ant-design/icons";
 function Posts () {
 
     const [post , setPost ] = useContext(PostContext) // Using the global state 
-
+    const router = useRouter()
     const { posts } = post;
     console.log("posts from context" , post)
     useEffect(() => {
@@ -24,7 +25,10 @@ function Posts () {
 
     const fetchposts = async () => {
         try{
+            
+            
             const { data } = await axios.get('/posts')
+            
             setPost((prev) =>   ( {...prev,posts:data}) ) // updating the previous pre
             
 
@@ -37,11 +41,27 @@ function Posts () {
     }
 
     const handleEdit = async (post) => {
-        console.log("Edit",post)
-
-
-    }
+       return router.push(`/admin/posts/${post.slug}`)
+         }
     const handleDelete = async (post) => {
+
+        try{
+            const answer = window.confirm("Are you sure you want to delete this post?")
+            if(answer) {
+            const { data } = await axios.delete(`/post/${post._id}`);
+            if(data.ok){
+                setPost((prev)=> ({...prev, 
+                    posts: prev.posts.filter((p)=> (p._id !== post._id),
+                    )} ))
+            }
+            }
+            else{
+                return
+            }
+           
+
+        }
+        catch(err)  { console.log(err) }
         console.log("Delete" , post)
 
     

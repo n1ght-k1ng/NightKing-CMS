@@ -238,8 +238,8 @@ const AdminNav = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="8">
-            <Link href="/admin/media/UploadFile">
-              <a className={activeName("/admin/media/UploadFile")}>Add New</a>
+            <Link href="/admin/media/new">
+              <a className={activeName("/admin/media/new")}>Add New</a>
             </Link>
           </Menu.Item>
         </SubMenu>

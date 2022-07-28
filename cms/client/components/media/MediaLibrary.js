@@ -9,6 +9,7 @@ import ToggleTheme from "../ToggleTheme";
 import { MediaContext } from "../../context/media"
 import axios from "axios";
 import { set } from "mongoose";
+import {toast } from "react-hot-toast"
 
 // const {Content , Sider} = Layout;
 
@@ -75,6 +76,7 @@ function MediaLibrary () {
             selected: null,
           })
         }
+        toast.error("Image Deleted successfully");
 
       }
       catch(err) { console.log(err)

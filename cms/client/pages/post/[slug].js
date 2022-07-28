@@ -19,9 +19,9 @@ export const SinglePost = ({ post}) => {
             <title> {post.title} </title>
             {/* <meta description={post.content.substring(0,160)}/>  */}
         </Head>
-        <Row gutter = {12}>
+        <Row>
 
-            <Col xm={24} xl ={16}>
+            <Col xs={24} xl ={16}>
                 {/* <pre>{JSON.stringify(post,null,4)}</pre>  */}
                 <Card
                 cover = {
@@ -38,29 +38,42 @@ export const SinglePost = ({ post}) => {
                             </Link>
 
                         </span>))}</p>
+                        <p> ====================================== </p>
+                      
                        
                         
                     
                 </Card>
-                
                 <Editor 
                         
                         apiKey = "g7wekghh9n4a5vw9pjog2yglr9kgert1sy9zlxcxvnyj0o9n"
-                        init={{ selector: 'textarea',
-                        plugins: [' powerpaste'],
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:40px }',
-                        skin:'oxide-dark',
+                        init={{ 
+                            selector: 'textarea',  
+                            skin: `oxide-dark`,
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:40px; font-weight:bold; }',
                         toolbar: false,
                         menubar: false,
                         inline: true,
-                        readonly: true
+                        noneditable_class: 'mceNonEditable',
+                        readonly: true,
+                        plugins: "noneditable template",
+                        noneditable_noneditable_class: "is-locked",
+                        
                     }}
-                       
-                        initialValue={post.text}/>
+                     
+
+                        initialValue={post.text}
+                        // contenteditable = "false"
+                        />
+                
+              
+                    {/* <p class="mceNonEditable">{post.text}</p> */}
+            
+
             
             </Col>
-            <Col xm={24} xl ={4}>
-                Sidebar
+            <Col xs={22} xl ={6} offset={1}>
+                Sidebar lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonumy eirmod tempor inv      incididunt ut labore et dolore magna aliquyam errorHandlers
                 </Col> 
 
 

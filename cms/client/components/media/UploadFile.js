@@ -7,16 +7,17 @@ import {UploadOutlined} from "@ant-design/icons"
 import { AuthContext } from "../../context/auth";
 import React from "react"
 import { MediaContext } from "../../context/media"
+import { useRouter } from "next/router";
 
 
 
 // const {Content , Sider} = Layout;
 
-function UploadFile () {
+function UploadFile ({redirectToLib = false}) {
 
     const [auth , setAuth] = useContext(AuthContext) 
     const [media, setMedia] = useContext(MediaContext)
-
+     const router = useRouter()
     const props = {
         name: "file",
         action: `${process.env.NEXT_PUBLIC_API}upload-image-file`,
@@ -35,6 +36,11 @@ function UploadFile () {
                     selected: info.file.response,
                     showMediaModal: false
                   } )
+                  if(redirectToLib){
+                    router.push('/admin/media/library')
+                  }
+
+
                   console.log("info.file =>" , info.file)
                 } else if (info.file.status === 'error') {
                   message.error(`${info.file.name} file upload failed.`);

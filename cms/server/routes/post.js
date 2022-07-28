@@ -10,7 +10,7 @@ const router = express.Router();
 
 // controllers
 
-import {uploadImage , createPost , posts, uploadImageFile , media, removeMedia , SinglePost} from "../controllers/post"
+import {uploadImage , createPost , posts, uploadImageFile , media, removeMedia , SinglePost , removePost , updatePost} from "../controllers/post"
 
 
  
@@ -21,6 +21,7 @@ router.get("/posts", posts)
 router.get('/media' , requireSignIn,isAdmin,media)
 router.get('/post/:slug',SinglePost)
 router.delete("/media/:id" , requireSignIn,isAdmin, removeMedia)
-
+router.delete('/post/:postId', requireSignIn,isAdmin, removePost)
+router.put(`/edit-post/:postId`, requireSignIn,isAdmin, updatePost)
 
 export default router

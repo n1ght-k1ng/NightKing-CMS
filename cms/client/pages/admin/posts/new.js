@@ -108,7 +108,7 @@ function NewPost () {
                 console.log("POST PUBLISH RESS  =>", data )
                 toast.success("Post Created Successfully");
                 localStorage.removeItem("post-title");
-                setMedia({...media , selected: ""})
+                setMedia({...media , selected: null})
                 localStorage.removeItem("post-content");
                 router.push("/admin/posts")
                 setCategories([])
@@ -148,7 +148,7 @@ function NewPost () {
             }
         }
     }
-    const [initialValuee, setInitialValuee] = useState(undefined);
+    const [initialValuee, setInitialValuee] = useState("Welcome to NightKing-CMS");
 
     useEffect(() => {
         if(process.browser)
