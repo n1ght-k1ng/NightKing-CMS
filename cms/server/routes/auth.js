@@ -1,7 +1,7 @@
 
 import express from "express";
-import { requireSignIn , isAdmin} from "../middlewares";
-import { currentUser } from "../controllers/auth"
+import { requireSignIn , isAdmin , isAuthor} from "../middlewares";
+import { currentUser , createUser } from "../controllers/auth"
 
 const router = express.Router();
 
@@ -27,4 +27,6 @@ router.post("/signin", signin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 router.get('/current-admin',requireSignIn,isAdmin,currentUser)
+router.get('/current-author',requireSignIn,isAuthor,currentUser)
+router.post("/create-user",requireSignIn,isAdmin,createUser);
 export default router;

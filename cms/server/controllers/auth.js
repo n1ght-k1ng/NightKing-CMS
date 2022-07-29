@@ -3,6 +3,7 @@ import User from "../models/user";
 import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
+import validator from 'email-validator'
 import toast  from "react-hot-toast"
 // sendgrid
 require("dotenv").config();
@@ -175,4 +176,65 @@ export const currentUser = async (req, res) => {
 
 
   }
+}
+
+export const createUser = async (req, res) => {
+  try{
+      // console.log(req.body)
+      const { name , email , password , role , checked , Website} = req.body
+      if(!name){
+        return res.json({
+          error: "Name is required"
+        })
+      }
+      if(!email || validator.validate({email})){
+       return res.json({
+          error: "Please enter a valid email address"
+        })
+      }
+      if(!password || password.length < 6){
+        return res.json({
+          error: "Password must be at least 6 characters long"
+        })
+      }
+      // if user exists
+      const exist = await User.findOne({ email})
+      if(exist){
+        return res.json({error: "Email is taken already"}) 
+      }
+      const hashedPassword = await hashPassword(password)
+      if(checked){
+        //prepare
+        const emailData ={
+          to: email,
+          from: process.env.EMAIL_FROM,
+          subject: 'Account Created',
+          html: `<h1> Welcome to NightKing-CMS ${name}</h1>
+          <p> Your account has been created successfully! </p>
+          <h3> Your login details  </h3>
+          <p style = "color:red"> Email: ${email}</p>
+          <p style = "color:red"> Password: ${password}</p>
+          
+          
+
+          `
+        }
+        try{
+          const data = await sgMail.send(emailData)
+          console.log("email sent => ", data)
+        }
+        catch(err){ console.log(err)  }
+     }
+      try{
+         const user = await new User({
+         name , email ,password: hashedPassword , role , Website
+         }).save()
+        
+         const { password, ...rest} = user._doc
+         return res.json(rest)
+
+      }
+      catch(err){ console.log(err)  }
+  }
+  catch (err) { console.log(err)  }
 }

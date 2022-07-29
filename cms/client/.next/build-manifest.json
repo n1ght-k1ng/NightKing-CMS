@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/media/library": [
+    "/author": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/media/library.js"
+      "static/chunks/pages/author.js"
     ],
-    "/post/[slug]": [
+    "/author/posts/new": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/post/[slug].js"
+      "static/chunks/pages/author/posts/new.js"
     ]
   },
   "ampFirstPages": []

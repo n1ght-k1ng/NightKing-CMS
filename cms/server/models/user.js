@@ -25,6 +25,9 @@ const userSchema = new Schema(
       type: String,
       default: "Subscriber",
     },
+    website:{
+      type: String,
+    },
     image: {
       public_id: "",
       url: "",

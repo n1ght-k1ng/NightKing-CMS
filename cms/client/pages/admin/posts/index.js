@@ -6,6 +6,7 @@ import AdminLayout from "../../../components/layout/adminLayout";
 import Link  from 'next/link'
 import { useRouter } from 'next/router';
 import { BorderHorizontalOutlined, PlusOutlined } from "@ant-design/icons";
+import PostsList from '../../../components/posts/PostsList';
 
 // const {Content , Sider} = Layout;
 
@@ -86,29 +87,7 @@ function Posts () {
 
                 <h1 style ={{marginTop: 15 }}> {posts?.length} Posts </h1>
 
-                <List 
-                itemLayout = "horizontal"
-                dataSource ={posts}
-                renderItem = {(item) => (
-                    <List.Item actions = {[
-                        <a onClick ={() => handleEdit(item)}> edit </a>,
-                        <a onClick = {() => handleDelete(item)}> delete </a>
-                    ]}>
-                        
-                            <List.Item.Meta title = {item.title} />
-
-
-                    </List.Item>
-                    
-                        
-                    
-                    
-
-    )}
-
-
-
-                />
+                <PostsList posts = {posts} handleEdit = {handleEdit} handleDelete = {handleDelete} />
             </Col>
         </Row>
 

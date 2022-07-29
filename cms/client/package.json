@@ -19,6 +19,7 @@
     "antd": "^4.21.5",
     "axios": "^0.27.2",
     "dayjs": "^1.11.4",
+    "generate-password": "^1.7.0",
     "mongodb-client-encryption": "^2.1.0",
     "mongoose": "^6.4.6",
     "next": "^12.2.2",
