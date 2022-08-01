@@ -105,8 +105,11 @@ export const canUpdateDeletePost = async (req, res, next) => {
 
 export const canDeleteMedia = async (req, res, next) => {
     try{
-        const media = await Media.findById(req.params.id)
         const user  = await User.findById(req.user._id)
+        const media = await Media.findById(req.params.id)
+        console.log("params " , media.postedBy.toString())
+        console.log("user " , user._id.toString())
+       
         switch(user.role){
             case "Admin":
                 next()

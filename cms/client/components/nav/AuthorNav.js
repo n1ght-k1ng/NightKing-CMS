@@ -73,18 +73,18 @@ const AuthorNav = () => {
               <a className={activeName("/author/posts/new")}>Add New</a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="5">
+          {/* <Menu.Item key="5">
             <Link href="/author/categories">
               <a className={activeName("/author/categories")}>Categories</a>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </SubMenu>
 
         {/* library */}
         <SubMenu key="6" icon={<CameraOutlined />} title="Media">
           <Menu.Item key="7">
-            <Link href="/author/media/MediaLibrary">
-              <a className={activeName("/author/media/medialibrary")}>Library</a>
+            <Link href="/author/media/library">
+              <a className={activeName("/author/media/library")}>Library</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="8">
@@ -106,8 +106,8 @@ const AuthorNav = () => {
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href="/author/userid">
-            <a className={activeName("/author/userid")}>Profile</a>
+          <Link href="/author/profile">
+            <a className={activeName("/author/profile")}>Profile</a>
           </Link>
         </Menu.Item>
 

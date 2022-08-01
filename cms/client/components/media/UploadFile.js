@@ -13,14 +13,14 @@ import { useRouter } from "next/router";
 
 // const {Content , Sider} = Layout;
 
-function UploadFile ({redirectToLib = false}) {
+function UploadFile ({redirectToLib = false , page = "admin"}) {
 
     const [auth , setAuth] = useContext(AuthContext) 
     const [media, setMedia] = useContext(MediaContext)
      const router = useRouter()
     const props = {
         name: "file",
-        action: `${process.env.NEXT_PUBLIC_API}upload-image-file`,
+        action: `${process.env.NEXT_PUBLIC_API}/upload-image-file`,
         headers: {
             Authorization:  `Bearer ${auth.token}`
         },
@@ -37,7 +37,7 @@ function UploadFile ({redirectToLib = false}) {
                     showMediaModal: false
                   } )
                   if(redirectToLib){
-                    router.push('/admin/media/library')
+                    router.push(`/${page}/media/library`)
                   }
 
 

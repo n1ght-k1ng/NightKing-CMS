@@ -267,8 +267,8 @@ const AdminNav = () => {
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href="/admin/userid">
-            <a className={activeName("/admin/userid")}>Profile</a>
+          <Link href="/admin/profile">
+            <a className={activeName("/admin/profile")}>Profile</a>
           </Link>
         </Menu.Item>
 

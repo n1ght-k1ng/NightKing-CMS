@@ -238,3 +238,13 @@ export const createUser = async (req, res) => {
   }
   catch (err) { console.log(err)  }
 }
+
+
+export const users = async (req, res) => {
+
+  try{
+      const all  =  await User.find().select('-password -secret -resetCode')
+      res.json(all)               
+  }
+  catch(err){ console.log(err) }
+}

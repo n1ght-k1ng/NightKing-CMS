@@ -104,7 +104,7 @@ export const uploadImageFile = async (req, res) => {
             const media = await new Media({
                 url: result.secure_url,
                 public_id: result.public_id,
-                postedBy: result.postedBy
+                postedBy: req.user._id
             }).save()
 
             res.json(media)
@@ -190,4 +190,20 @@ export const updatePost = async (req, res) => {
 
     }
     catch(err) { console.log(err) }
+}
+
+export const postsbyAuthor = async(req, res) => 
+{
+    try{
+        const posts = await Post.find({postedBy: req.user._id})
+        .populate('postedBy', '_id')
+        .populate('categories', 'name slug')
+        .populate('featuredImage', 'url')
+        .sort({ createdAt: -1 })
+
+        return res.json(posts)
+
+
+    }
+    catch(err) { console.log(err) } 
 }

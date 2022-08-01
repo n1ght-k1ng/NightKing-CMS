@@ -13,7 +13,7 @@ import {toast } from "react-hot-toast"
 
 // const {Content , Sider} = Layout;
 
-function MediaLibrary () {
+function MediaLibrary ({ page = "admin"}) {
 
     const {Dragger} = Upload
 
@@ -107,6 +107,9 @@ function MediaLibrary () {
           preview={showPreview} 
           style={{paddingTop: 5 ,
           paddingRight: 5 , 
+          paddingTop: 5 ,
+          
+          marginBottom: 50 ,
           height: '100px' ,
           width: '100px' , 
           objectFit: 'cover',
@@ -117,7 +120,12 @@ function MediaLibrary () {
            />
            <br/>
 
-           <CloseCircleOutlined onClick={()=> handleImageDelete(image._id)} style = {{ marginTop: '5', color: '#f5222d '}}/>
+            {page === "author" && image?.postedBy?._id == auth?.user?._id ? (
+              <CloseCircleOutlined onClick={()=> handleImageDelete(image._id)} style = {{ color: '#f5222d '}}/>
+            ) : page === "admin" ? (
+              <CloseCircleOutlined onClick={()=> handleImageDelete(image._id)} style = {{ color: '#f5222d '}}/>
+            ) : ("")}
+          
 
            </Badge>
            ))}
