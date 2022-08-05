@@ -4,6 +4,7 @@ import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
 import validator from 'email-validator'
+
 import toast  from "react-hot-toast"
 // sendgrid
 require("dotenv").config();
@@ -247,4 +248,80 @@ export const users = async (req, res) => {
       res.json(all)               
   }
   catch(err){ console.log(err) }
+}
+
+export const deleteUser = async (req, res) => {
+  try{  
+    const { userid } = req.params;
+
+    if(userid === req.user._id){
+      return
+    }
+    else{
+      const del = await User.findByIdAndDelete(userid)
+    }
+    
+
+    res.json({success: true})
+    
+
+
+  }
+  catch(err){ console.log(err) }
+}
+
+export const currentUserProfile = async (req, res) => {
+  try{
+    const user = await User.findById(req.params.userid).populate('image')
+    res.json(user)
+
+  }
+  catch(err){ console.log(err) }  
+}
+
+export const UpdateUserbyAdmin = async (req, res) => {
+  try{
+    const { id, name , email , password , Website , role , image } = req.body
+
+    console.log("Request received " ,  req.body)
+
+    const userFromDb = await User.findById(id)
+
+    //check email / email taken ? / check password length
+    if(!validator.validate(email)){
+      return res.json({error: 'Invalid email'})
+    }
+    const exist = await User.findOne({ email })
+    if(exist && exist._id.toString() !== userFromDb._id.toString())
+    {
+      return res.json({error: 'Email is taken'})
+
+    }
+    if(password && password.length < 6)
+    {
+      return res.json({error: 'Password must be at least 6 characters long'})
+    }
+
+    console.log('HERE WE ARE')
+    
+    const hashedPassword = password ? await hashPassword(password) : undefined
+    console.log('HERE WE ARE', hashedPassword , password)
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+      name : name || userFromDb.name,
+      email: email || userFromDb.email,
+      password: hashedPassword || userFromDb.password,
+      website: Website || userFromDb.website,
+      role: role || userFromDb.role,
+      image: image || userFromDb.image,
+    },
+    {new: true}
+    ).populate("image")
+
+    res.json(updated)
+  }
+
+  catch(err){ console.log(err) }
+
 }

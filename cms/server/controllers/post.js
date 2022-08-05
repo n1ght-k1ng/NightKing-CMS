@@ -3,6 +3,7 @@ import Post from '../models/post'
 import slugify from 'slugify'
 import Media from '../models/media'
 import Category from '../models/category'
+import User from '../models/user'
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
@@ -64,6 +65,12 @@ export const createPost = async (req ,res) =>{
                 categories: ids,
                 postedBy: req.user._id,
             }).save()
+
+            //push the post id to user's array
+
+            await User.findByIdAndUpdate(req.user._id , {
+                $addToSet: {posts: post._id}
+            })
 
             return res.json(post)
 

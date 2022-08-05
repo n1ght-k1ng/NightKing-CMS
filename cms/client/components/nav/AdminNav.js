@@ -233,8 +233,8 @@ const AdminNav = () => {
         {/* library */}
         <SubMenu key="6" icon={<CameraOutlined />} title="Media">
           <Menu.Item key="7">
-            <Link href="/admin/media/MediaLibrary">
-              <a className={activeName("/admin/media/medialibrary")}>Library</a>
+            <Link href="/admin/media/library">
+              <a className={activeName("/admin/media/library")}>Library</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="8">

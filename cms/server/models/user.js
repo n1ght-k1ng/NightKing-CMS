@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose";
 const { Schema } = mongoose;
-
+const { ObjectId } = mongoose;
 const userSchema = new Schema(
   {
     name: {
@@ -28,10 +28,8 @@ const userSchema = new Schema(
     website:{
       type: String,
     },
-    image: {
-      public_id: "",
-      url: "",
-    },
+    image: {type: ObjectId, ref: "Media"},
+    posts:[{type: ObjectId , ref: "Post"}],
     resetCode: "",
   },
   { timestamps: true }
