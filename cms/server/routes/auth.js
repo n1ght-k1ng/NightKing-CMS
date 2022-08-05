@@ -1,7 +1,7 @@
 
 import express from "express";
 import { requireSignIn , isAdmin , isAuthor} from "../middlewares";
-import { currentUser , createUser ,users, deleteUser, currentUserProfile , UpdateUserbyAdmin} from "../controllers/auth"
+import { currentUser , createUser ,users, deleteUser, currentUserProfile , UpdateUserbyAdmin,UpdateUserbyUser} from "../controllers/auth"
 
 const router = express.Router();
 
@@ -34,4 +34,5 @@ router.get('/users', requireSignIn,isAdmin , users)
 router.delete("/user/:userid", requireSignIn,isAdmin,deleteUser);
 router.get('/user/:userid', requireSignIn , currentUserProfile) 
 router.put('/update-user-by-admin', requireSignIn, isAdmin, UpdateUserbyAdmin)
+router.put('/update-user-by-user', requireSignIn, UpdateUserbyUser)
 export default router;

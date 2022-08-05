@@ -1,6 +1,6 @@
 import { useState , useEffect, useContext} from "react";
 import AdminLayout from "../../../components/layout/adminLayout";
-import { Row , Col , List , Avatar } from "antd"
+import { Row , Col , List , Avatar, Input } from "antd"
 import axios from 'axios'
 import {toast} from 'react-hot-toast'
 import {useRouter} from 'next/router'
@@ -12,6 +12,7 @@ import loadCustomRoutes from "next/dist/lib/load-custom-routes";
 const AllUsers = () => {
     const [auth, setAuth] = useContext(AuthContext)
     const [users , setUsers] = useState([])
+    const [keyword , setKeyword] = useState('')
 
     const router = useRouter()
     useEffect(() => {
@@ -55,6 +56,7 @@ const AllUsers = () => {
              }
         catch(err) { console.log(err) }
     }
+    const filteredUsers = users?.filter(user => user.name.toLowerCase().includes(keyword))
 
 
     return (
@@ -67,9 +69,10 @@ const AllUsers = () => {
                
 
                 <br/>
+                <Input placeholder = "Search" type= 'search' value={keyword} onChange={e => setKeyword(e.target.value.toLowerCase())}/>
                 <List
                     itemLayout = 'horizontal'
-                    dataSource = {users}
+                    dataSource = {filteredUsers}
                     renderItem = {(user) => (
 
 

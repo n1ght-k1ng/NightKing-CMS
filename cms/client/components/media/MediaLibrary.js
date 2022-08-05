@@ -79,7 +79,9 @@ function MediaLibrary ({ page = "admin"}) {
         toast.error("Image Deleted successfully");
 
       }
-      catch(err) { console.log(err)
+      catch(err) { 
+        console.log(err)
+        // toast.error("Cant delete image")
     }
   }
     return(

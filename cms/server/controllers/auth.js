@@ -325,3 +325,54 @@ export const UpdateUserbyAdmin = async (req, res) => {
   catch(err){ console.log(err) }
 
 }
+export const UpdateUserbyUser = async (req, res) => {
+  try{
+    const { id, name , email , password , Website , role , image } = req.body
+
+    console.log("Request received " ,  req.body)
+
+    const userFromDb = await User.findById(id)
+
+  //check if user is authenticated
+  if(userFromDb._id.toString() !== req.user._id.toString()){
+    return res.status(403).send("You are not allowed to update this user")
+  }
+
+    //check email / email taken ? / check password length
+    if(!validator.validate(email)){
+      return res.json({error: 'Invalid email'})
+    }
+    const exist = await User.findOne({ email })
+    if(exist && exist._id.toString() !== userFromDb._id.toString())
+    {
+      return res.json({error: 'Email is taken'})
+
+    }
+    if(password && password.length < 6)
+    {
+      return res.json({error: 'Password must be at least 6 characters long'})
+    }
+
+    console.log('HERE WE ARE')
+    
+    const hashedPassword = password ? await hashPassword(password) : undefined
+    console.log('HERE WE ARE', hashedPassword , password)
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+      name : name || userFromDb.name,
+      email: email || userFromDb.email,
+      password: hashedPassword || userFromDb.password,
+      website: Website || userFromDb.website,
+      // role: role || userFromDb.role,
+      image: image || userFromDb.image,
+    },
+    {new: true}
+    ).populate("image")
+
+    res.json(updated)
+  }
+
+  catch(err){ console.log(err) }
+
+}

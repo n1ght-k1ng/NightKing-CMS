@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
 import { useWindowWidth } from "@react-hook/window-size";
+import { AuthContext } from "../../context/auth";
 import {
   PieChartOutlined,
   MailOutlined,
@@ -20,6 +21,7 @@ const { Sider } = Layout;
 
 const AuthorNav = () => {
   // state
+  const [ auth , setAuth ] = useContext(AuthContext)
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState("");
 
@@ -106,8 +108,8 @@ const AuthorNav = () => {
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href="/author/profile">
-            <a className={activeName("/author/profile")}>Profile</a>
+          <Link href= {`/author/${auth?.user?._id}`}>
+            <a className={activeName( `/author/${auth?.user._id}`)}>Profile</a>
           </Link>
         </Menu.Item>
 

@@ -91,16 +91,22 @@ export const createPost = async (req ,res) =>{
 
 export const posts = async (req, res) => {
         try{
+            const perPage = 6
+            const page = req.params.page || 1
             const all = await Post.find()
+            .skip((page -1) * perPage)
             .populate('featuredImage')
             .populate("postedBy", "name")
             .populate("categories", "name slug")
             .sort({createdAt: -1})
+            .limit(perPage)
             res.json(all)
         }
 
         catch(err) { console.log(err) }
     }
+
+
 
 export const uploadImageFile = async (req, res) => {
         try{
@@ -213,4 +219,21 @@ export const postsbyAuthor = async(req, res) =>
 
     }
     catch(err) { console.log(err) } 
+}
+
+export const postCount = async (req, res) =>{
+    try{
+        const count = await Post.countDocuments()
+        res.json(count)
+    }
+    catch(err) { console.log(err) }
+}
+
+export const postsforadmin = async (req, res) =>{
+    try{
+        const posts = await Post.find().select('title slug')
+        res.json(posts)
+
+    }
+    catch(err) { console.log(err) }
 }

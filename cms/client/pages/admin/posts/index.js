@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { useEffect , useState , useContext} from 'react';
 import { PostContext } from '../../../context/post';
-import { Button , Row , Col, List  } from "antd";
+import { Button , Row , Col, List , Input } from "antd";
 import AdminLayout from "../../../components/layout/adminLayout";
 import Link  from 'next/link'
 import { useRouter } from 'next/router';
 import { BorderHorizontalOutlined, PlusOutlined } from "@ant-design/icons";
 import PostsList from '../../../components/posts/PostsList';
-
+import { AuthContext } from '../../../context/auth';
+import Search from 'antd/lib/transfer/search';
 // const {Content , Sider} = Layout;
 
 
@@ -16,19 +17,21 @@ function Posts () {
 
     const [post , setPost ] = useContext(PostContext) // Using the global state 
     const router = useRouter()
+    const [keyword , setKeyword] = useState('')
     const { posts } = post;
+    const [ auth, setAuth ] = useContext(AuthContext)
     console.log("posts from context" , post)
     useEffect(() => {
 
-        fetchposts()
+        if(auth?.token) fetchposts()
 
-    },[])
+    },[auth?.token])
 
     const fetchposts = async () => {
         try{
             
             
-            const { data } = await axios.get('/posts')
+            const { data } = await axios.get('/posts-for-admin')
             
             setPost((prev) =>   ( {...prev,posts:data}) ) // updating the previous pre
             
@@ -87,7 +90,9 @@ function Posts () {
 
                 <h1 style ={{marginTop: 15 }}> {posts?.length} Posts </h1>
 
-                <PostsList posts = {posts} handleEdit = {handleEdit} handleDelete = {handleDelete} />
+                <Input placeholder = "Search" type= 'search' value={keyword} onChange={e => setKeyword(e.target.value.toLowerCase())}/>
+
+                <PostsList posts = {posts.filter((p) => p.title.toLowerCase().includes(keyword))} handleEdit = {handleEdit} handleDelete = {handleDelete} />
             </Col>
         </Row>
 

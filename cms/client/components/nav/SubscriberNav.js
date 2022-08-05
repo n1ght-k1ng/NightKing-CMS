@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Menu,  Layout } from "antd";
 import Link from "next/link";
+import { AuthContext } from "../../context/auth";
 import { useWindowWidth } from "@react-hook/window-size";
 import {
 
@@ -19,6 +20,7 @@ const { Sider } = Layout;
 
 const SubscriberNav = () => {
   // state
+  const [ auth , setAuth] = useContext(AuthContext)
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState("");
 
@@ -77,8 +79,8 @@ const SubscriberNav = () => {
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
-          <Link href="/subscriber/profile">
-            <a className={activeName("/subscriber/profile")}>Profile</a>
+          <Link href={`/subscriber/${auth?.user?._id}`}>
+            <a className={activeName(`/subscriber/${auth?.user?._id}`)}>Profile</a>
           </Link>
         </Menu.Item>
 
