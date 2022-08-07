@@ -1,18 +1,42 @@
 
 import axios from 'axios'
-import { Row , Col , Card , Typography} from 'antd'
+import { Row , Col , Card , Typography ,List ,Avatar} from 'antd'
 
 import dayjs from 'dayjs'
 import {Editor} from '@tinymce/tinymce-react'
 import Head from 'next/head'
-
+import CommentForm from "../../components/comments/CommentForm"
+import { useState } from 'react'
 import Link  from 'next/link'
+import toast from 'react-hot-toast'
+
+import relativeTime from "dayjs/plugin/relativeTime"
+dayjs.extend(relativeTime)
 
 // import { categories } from '../../../server/controllers/category'
  const { Meta } = Card  
  const { Title} = Typography
 
-export const SinglePost = ({ post}) => {
+export const SinglePost = ({ post , postComments}) => {
+    const [ comment, setComment] = useState([])
+    const [ comments, setComments ] = useState(postComments)
+    const [ loading , setLoading] = useState(false)
+    const handleSubmit = async () => 
+    {
+        try{
+            setLoading(true)
+            const { data } = await axios.post(`/comment/${post._id}` , {comment})
+            setComments([ data,...comments])
+            setComment('')
+            toast.success("Comment posted successfully")
+            setLoading(false)
+
+
+        }
+        catch(err){ console.log(err)
+        setLoading(false) }
+
+    }
     return (
         <>
         <Head>
@@ -43,7 +67,7 @@ export const SinglePost = ({ post}) => {
                        
                         
                     
-                </Card>
+                
                 <Editor 
                         
                         apiKey = "g7wekghh9n4a5vw9pjog2yglr9kgert1sy9zlxcxvnyj0o9n"
@@ -65,6 +89,29 @@ export const SinglePost = ({ post}) => {
                         initialValue={post.text}
                         // contenteditable = "false"
                         />
+                        <div></div>
+                        <CommentForm 
+                        comment = { comment} 
+                        setComment = { setComment }
+                        handleSubmit={handleSubmit}
+                        loading = {loading}
+                        />
+                        <div style ={{ marginBottom: 50 }}>   </div>
+                       
+                       <List
+                       itemLayout='horizontal' dataSource= { comments } renderItem= { item => (
+                        <List.Item key = {item._id} id = {item._id}>
+                            <List.Item.Meta avatar = {<Avatar>{item?.postedBy.name[0].charAt(0)}</Avatar>}
+                            title= {item.postedBy.name} 
+                            description= {`${item.content} - ${dayjs(item.createdAt).fromNow()}`}/>
+                        </List.Item>
+
+                       )}
+                       />
+                    
+                       
+                        </Card>
+
                 
               
                     {/* <p class="mceNonEditable">{post.text}</p> */}
@@ -91,7 +138,8 @@ export async function getServerSideProps({params}){
 
     return {
         props:{
-            post:data
+            post:data.post,
+            postComments: data.comments
         }
     }
 
@@ -100,73 +148,3 @@ export async function getServerSideProps({params}){
 export default SinglePost 
 
 
-// import { useContext } from "react";
-// import axios from "axios";
-// import { Row, Col, Card, Typography } from "antd";
-// import Head from "next/head";
-// import Link from "next/link";
-// import dayjs from "dayjs";
-// import Editor from "@tinymce/tinymce-react";
-// import { ThemeContext } from "../../context/theme";
-
-// const { Title } = Typography;
-
-// const { Meta } = Card;
-
-// export const SinglePost = ({ post }) => {
-//   const [theme, setTheme] = useContext(ThemeContext);
-
-//   return (
-//     <>
-//       <Head>
-//         <title>{post.title}</title>
-//         {/* <meta description={post.content.substring(0, 160)} /> */}
-//       </Head>
-//       <Row gutter={12}>
-//         <Col xm={24} xl={16}>
-//           <Card
-//             cover={
-//               <img
-//                 src={post?.featuredImage?.url || "/images/default.jpeg"}
-//                 alt={post.title}
-//               />
-//             }
-//           >
-//             <Title>{post.title}</Title>
-//             <p>
-//               {dayjs(post.createdAt).format("MMMM D, YYYY h:mm A")} / 0 Comments
-//               / in{" "}
-//               {post?.categories.map((c) => (
-//                 <span key={c._id}>
-//                   <Link href={`/category/${c.slug}`}>
-//                     <a>{c.name} </a>
-//                   </Link>
-//                 </span>
-//               ))}
-//             </p>
-
-//             <Editor
-//               initialValue={post.initialValuee}
-//               dark={theme === "light" ? false : true}
-//             />
-//           </Card>
-//         </Col>
-
-//         <Col xm={24} xl={8}>
-//           Sidebar
-//         </Col>
-//       </Row>
-//     </>
-//   );
-// };
-
-// export async function getServerSideProps({ params }) {
-//   const { data } = await axios.get(`${process.env.API}/post/${params.slug}`);
-//   return {
-//     props: {
-//       post: data,
-//     },
-//   };
-// }
-
-// export default SinglePost;

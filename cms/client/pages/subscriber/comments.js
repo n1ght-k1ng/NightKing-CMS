@@ -1,4 +1,5 @@
 import {Button , Row , Col} from "antd"
+import UserComments from "../../components/comments/UserComments";
 import SubscriberLayout from "../../components/layout/SubscriberLayout";
 
 
@@ -9,8 +10,7 @@ function Comments () {
     return(
         <SubscriberLayout>
 
-        <h1> This is Comments Page props</h1>
-        <p> moreeee</p>
+        <UserComments/>
         
 
         </SubscriberLayout>
