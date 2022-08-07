@@ -1,5 +1,5 @@
 import express from "express";
-import { requireSignIn , isAdmin , canCreateRead , canUpdateDeletePost, canDeleteMedia} from "../middlewares";
+import { requireSignIn , isAdmin , canCreateRead , canUpdateDeletePost, canDeleteMedia , canUpdateDeleteComment} from "../middlewares";
 import formidable from "express-formidable"
 
 
@@ -10,7 +10,7 @@ const router = express.Router();
 
 // controllers
 
-import {uploadImage , postCount ,postsforadmin, createPost , posts, uploadImageFile , media, removeMedia , SinglePost , removePost , updatePost , postsbyAuthor} from "../controllers/post"
+import {uploadImage ,comments ,userComments, commentcount,removeComment, UpdateComment, createComment, postCount ,postsforadmin, createPost , posts, uploadImageFile , media, removeMedia , SinglePost , removePost , updatePost , postsbyAuthor} from "../controllers/post"
 
 
 // router.post("/upload-image", requireSignIn,canCreateRead,uploadImage)
@@ -26,5 +26,12 @@ router.delete('/post/:postId', requireSignIn,canUpdateDeletePost, removePost)
 router.put(`/edit-post/:postId`, requireSignIn,isAdmin, updatePost)
 router.get("/posts-by-author", requireSignIn, postsbyAuthor)
 router.get("/post-count", postCount)
+// comment 
+router.post("/comment/:postId", requireSignIn, createComment)
+router.get('/comments/:page' , requireSignIn, isAdmin, comments)
+router.get('/comment-count' , commentcount)
+router.delete('/comment/:commentId', requireSignIn, canUpdateDeleteComment, removeComment)
+router.put('/comment/:commentId', requireSignIn, canUpdateDeleteComment, UpdateComment)
+router.get('/user-comments', requireSignIn, userComments)
 
 export default router

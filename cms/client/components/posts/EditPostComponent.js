@@ -46,13 +46,13 @@ function EditPost({sentby = "admin"}) {
     try {
       const { data } = await axios.get(`/post/${router.query.slug}`);
       console.log("GOT POST FOR EDIT", data);
-      setTitle(data.title);
-      setContent(data.text);
-      setFeaturedImage(data.featuredImage);
-      setPostId(data._id);
+      setTitle(data.post.title);
+      setContent(data.post.text);
+      setFeaturedImage(data.post.featuredImage);
+      setPostId(data.post._id);
       // push category names
       let arr =[]
-      data.categories.map((c) => arr.push(c.name))
+      data.post.categories.map((c) => arr.push(c.name))
       setCategories(arr);
 
       setLoading(false)
