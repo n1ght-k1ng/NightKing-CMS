@@ -318,3 +318,17 @@ export const userComments = async (req, res) => {
     }
     catch(err) { console.log(err) }
 }
+
+export const getNumbers= async (req, res) => {
+    try{
+        const posts = await Post.countDocuments()
+        const users = await User.countDocuments()
+        const comments = await Comment.countDocuments()
+        const categories = await Category.countDocuments() 
+
+        res.json({ posts , users , comments , categories})
+
+
+    }
+    catch(err) { console.log(err) }
+}

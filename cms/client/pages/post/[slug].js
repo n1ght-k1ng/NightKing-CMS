@@ -9,6 +9,7 @@ import CommentForm from "../../components/comments/CommentForm"
 import { useState } from 'react'
 import Link  from 'next/link'
 import toast from 'react-hot-toast'
+import { ShareSocial } from 'react-share-social'
 
 import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
@@ -62,7 +63,19 @@ export const SinglePost = ({ post , postComments}) => {
                             </Link>
 
                         </span>))}</p>
-                        <p> ====================================== </p>
+                        <div style={{ marginTop: "-20px", marginBottom: "15px" }}>
+                           
+              <ShareSocial
+                url={process.browser && window.location.href}
+                socialTypes={["facebook", "twitter", "reddit", "linkedin"]}
+                style={{
+                  height: "100px",
+                  overflow: "hidden",
+                  background: "none",
+                }}
+              />
+            </div>
+                
                       
                        
                         

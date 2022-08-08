@@ -13,27 +13,40 @@ const ContactForm = () => {
 
     const [loading, setloading] = useState(false)
     const router = useRouter()
-    const [form ] = Form.useForm();
+    const [ form ] = Form.useForm();
 
   
     const onFinish = async (values) => {
-      // console.log('Received values of form: ', values);
+      console.log('Received values of form: ', values);
 
       try{
+        setloading(true)
+
+        const { data } = await axios.post('/contact', values)
+        if(data?.error)
+        {
+          toast.error(data?.error)
+          setloading(false)
+        }
+        else{
+          toast.success("Thankyou for your feedback. Your message has been sent successfully")
+          form.resetFields()
+          setloading(false)
+        }
         setloading(true)
       
       }
       catch(err){
           console.log(err);
           setloading(false)
-          toast.error('SignIN failed')
+          toast.error('Email Failed, Try again')
       }
     };
   
     return (
         <Row>
             <Col span={20} offset={2}>
-            <h1> Contact Form </h1>
+            <h1> Contact NightKing</h1>
       <Form
         form = { form }
         name="normal_login"
@@ -89,13 +102,14 @@ const ContactForm = () => {
           <Input.TextArea
             prefix={<LockOutlined className="site-form-item-icon" />}
             
-            placeholder="Please write your message here"
+            placeholder="Tell us about your feedback about NightKing CMS"
           />
         </Form.Item>
+        <br/>
        
         <Form.Item>
           <Button  type="primary" htmlType="submit" className="login-form-button">
-            Submit
+            Send Email
           </Button>
         
         </Form.Item>

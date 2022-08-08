@@ -10,7 +10,7 @@ const router = express.Router();
 
 // controllers
 
-import {uploadImage ,comments ,userComments, commentcount,removeComment, UpdateComment, createComment, postCount ,postsforadmin, createPost , posts, uploadImageFile , media, removeMedia , SinglePost , removePost , updatePost , postsbyAuthor} from "../controllers/post"
+import {uploadImage ,getNumbers ,comments ,userComments, commentcount,removeComment, UpdateComment, createComment, postCount ,postsforadmin, createPost , posts, uploadImageFile , media, removeMedia , SinglePost , removePost , updatePost , postsbyAuthor} from "../controllers/post"
 
 
 // router.post("/upload-image", requireSignIn,canCreateRead,uploadImage)
@@ -33,5 +33,6 @@ router.get('/comment-count' , commentcount)
 router.delete('/comment/:commentId', requireSignIn, canUpdateDeleteComment, removeComment)
 router.put('/comment/:commentId', requireSignIn, canUpdateDeleteComment, UpdateComment)
 router.get('/user-comments', requireSignIn, userComments)
+router.get('/numbers', getNumbers)
 
 export default router
