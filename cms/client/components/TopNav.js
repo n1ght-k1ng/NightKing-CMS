@@ -8,6 +8,8 @@ import {
   UserOutlined,
   LogoutOutlined,
   DatabaseOutlined,
+  ContactsFilled,
+  ContactsOutlined
 } from "@ant-design/icons";
 import ToggleTheme from "./ToggleTheme";
 import Link from "next/link";
@@ -69,6 +71,11 @@ const TopNav = () => {
       <Menu.Item key="posts" icon={<DatabaseOutlined />}>
         <Link href="/posts">
           <a>Posts</a>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="Contact" icon={<ContactsOutlined />}>
+        <Link href="/contact">
+          <a>Contact</a>
         </Link>
       </Menu.Item>
 
