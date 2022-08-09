@@ -5,6 +5,7 @@ import AdminNav from "../../components/nav/AdminNav"
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons"; 
+import LoadingToRedirect from "../LoadingToRedirect";
 
 import axios from 'axios'
 
@@ -55,17 +56,7 @@ function AdminLayout (props) {
     if(loading ){
 
 
-        return <LoadingOutlined  
-        style = {{
-
-            display:"flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize : "50px",
-            height : "100vh",
-            color : "red"
-            
-        }}/>
+        return <LoadingToRedirect/>
 
                 }
                 

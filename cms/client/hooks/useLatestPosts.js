@@ -2,7 +2,7 @@ import { useState , useEffect} from 'react'
 import axios from 'axios'
 
 const useLatestPosts =() => {
-        const [ posts , setposts ] = useState([])
+        const [ Latestposts , setposts ] = useState([])
         
         useEffect(() => {
             const getposts = async () => {
@@ -16,7 +16,7 @@ const useLatestPosts =() => {
         },[])
 
         return {
-            posts,
+            Latestposts,
         }
 }
 

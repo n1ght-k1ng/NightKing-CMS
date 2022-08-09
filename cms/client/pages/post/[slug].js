@@ -25,7 +25,7 @@ export const SinglePost = ({ post , postComments}) => {
     const [ comments, setComments ] = useState(postComments)
     const [ loading , setLoading] = useState(false)
     const { categories } = useCategory()
-    const { posts } = useLatestPosts()
+    const { Latestposts } = useLatestPosts()
     const handleSubmit = async () => 
     {
         try{
@@ -147,7 +147,7 @@ export const SinglePost = ({ post , postComments}) => {
 
                 <Divider> Latest Posts
                 </Divider>
-                {posts.map((p) => (
+                {Latestposts.map((p) => (
                     <Link href={`/post/${p.slug}`} key={p.name}>
                         <a><h4>{p.title}</h4></a>
                     </Link>

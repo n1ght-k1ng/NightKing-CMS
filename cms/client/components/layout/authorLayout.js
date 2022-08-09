@@ -5,7 +5,7 @@ import AuthorNav from "../nav/AuthorNav";
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons"; 
-
+import LoadingToRedirect from "../LoadingToRedirect";
 import axios from 'axios'
 
 import ToggleTheme from "../../components/ToggleTheme";
@@ -31,47 +31,16 @@ function authorLayout (props) {
     },[auth?.token])
 
     const getcurrentAuthor = async() => {
-        
         try{
             const {data } = await axios.get('/current-author')
              setLoading(false)
-
-
         }
         catch(err){ console.log(err) 
         router.push('/')}
     }
-
-    // Securing routes 
-   
-
- 
-
     const router = useRouter()
-
-  
-
-
-    if(loading ){
-
-
-        return <LoadingOutlined  
-        style = {{
-
-            display:"flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize : "50px",
-            height : "100vh",
-            color : "red"
-            
-        }}/>
-
-                }
-                
-
-
     
+    if(loading ){ return <LoadingToRedirect/>}
 
     return(
         <Layout>

@@ -3,27 +3,13 @@ import AdminLayout from "../../components/layout/adminLayout";
 import { useEffect , useState } from "react";
 import { Row , Col , Divider} from "antd"
 import Link from 'next/link'
-import axios from "axios"
+
 import RenderProgress from "../../components/posts/RenderProgress"
 import ToggleTheme from "../../components/ToggleTheme";
 // const {Content , Sider} = Layout;
-
+import useNumbers from "../../hooks/useNumbers";
 function Admin () {
-    const [numbers, setNumbers] = useState({})
-    useEffect(() =>
-    {
-        getNumbers()
-
-    },[])
-
-    const getNumbers = async () => 
-    {
-        try{
-            const { data } = await axios.get("/numbers")
-            setNumbers(data)
-        }
-        catch(err){ console.log(err)}
-    } 
+    const {numbers}  = useNumbers()
     return(
         <AdminLayout>
             <Row>

@@ -5,6 +5,7 @@ import SubscriberNav from "../nav/SubscriberNav";
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons"; 
+import LoadingToRedirect from "../LoadingToRedirect";
 
 import axios from 'axios'
 
@@ -22,11 +23,7 @@ function SubscriberLayout (props) {
     const [loading , setLoading ] = useState(true)
 
     useEffect(() => {
-
-
-        
         if(auth?.token) getcurrentSubscriber()
-        
         setLoading(false)        
     },[auth?.token])
 
@@ -55,17 +52,7 @@ function SubscriberLayout (props) {
     if(loading ){
 
 
-        return <LoadingOutlined  
-        style = {{
-
-            display:"flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize : "50px",
-            height : "100vh",
-            color : "red"
-            
-        }}/>
+        return <LoadingToRedirect/>
 
                 }
     return(
