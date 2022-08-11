@@ -119,7 +119,7 @@ const FormSignup = () => {
             placeholder="Password"
           />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="confirmpassword"
           rules={[
             {
@@ -133,7 +133,7 @@ const FormSignup = () => {
             type="password"
             placeholder="Confirm Password"
           />
-        </Form.Item>
+        </Form.Item> */}
         
   
         <Form.Item>
