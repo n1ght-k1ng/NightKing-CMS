@@ -129,6 +129,7 @@ function EditPost({sentby = "admin"}) {
             // }}
              apiKey = "g7wekghh9n4a5vw9pjog2yglr9kgert1sy9zlxcxvnyj0o9n"
              
+             
              init={{
                
                 selector: 'textarea',  
@@ -172,7 +173,7 @@ function EditPost({sentby = "admin"}) {
             //     }
             //   }
                  }}
-            initialValue={inval}
+            initialValue=  "Welcome to NightKing-CMS... Start Bloggin !!"
              
              onEditorChange={(content) => {
                 

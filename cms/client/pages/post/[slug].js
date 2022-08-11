@@ -60,16 +60,18 @@ export const SinglePost = ({ post , postComments}) => {
                     <Title>
                         {post.title}
                         </Title>
-                        <p>{dayjs(post.createdAt).format("MMMM D , YYYY h:mm A")} / 0 Comments / in    
+                        <p>{dayjs(post.createdAt).format("MMMM D , YYYY h:mm A")} in 
                          {post?.categories.map((c) => (<span key={c._id}>
                             <Link href = {`/category/${c.slug}`}>
                             <a >{c.name} </a>
                             </Link>
 
                         </span>))}</p>
+                        <p>======================================</p>
+                        <div style ={{ marginBottom: 50 }}>   </div>
                         <div style={{ marginTop: "-20px", marginBottom: "15px" }}>
                            
-              <ShareSocial
+              {/* <ShareSocial
                 url={process.browser && window.location.href}
                 socialTypes={["facebook", "twitter", "reddit", "linkedin"]}
                 style={{
@@ -77,7 +79,7 @@ export const SinglePost = ({ post , postComments}) => {
                   overflow: "hidden",
                   background: "none",
                 }}
-              />
+              /> */}
             </div>
                 
                       
@@ -117,10 +119,10 @@ export const SinglePost = ({ post , postComments}) => {
                        
                        <List
                        itemLayout='horizontal' dataSource= { comments } renderItem= { item => (
-                        <List.Item key = {item._id} id = {item._id}>
-                            <List.Item.Meta avatar = {<Avatar>{item?.postedBy.name[0].charAt(0)}</Avatar>}
-                            title= {item.postedBy.name} 
-                            description= {`${item.content} - ${dayjs(item.createdAt).fromNow()}`}/>
+                        <List.Item key = {item?._id} id = {item?._id}>
+                            <List.Item.Meta avatar = {<Avatar>{item?.postedBy?.name[0].charAt(0)}</Avatar>}
+                            title= {item?.postedBy?.name} 
+                            description= {`${item?.content} - ${dayjs(item?.createdAt).fromNow()}`}/>
                         </List.Item>
 
                        )}
@@ -147,9 +149,10 @@ export const SinglePost = ({ post , postComments}) => {
 
                 <Divider> Latest Posts
                 </Divider>
+
                 {Latestposts.map((p) => (
                     <Link href={`/post/${p.slug}`} key={p.name}>
-                        <a><h4>{p.title}</h4></a>
+                        <a><h4 style={{fontSize: '20px'}}>{p.title}</h4></a>
                     </Link>
                 ))}
                     

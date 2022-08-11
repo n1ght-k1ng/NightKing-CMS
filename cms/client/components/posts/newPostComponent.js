@@ -1,4 +1,4 @@
-import {Button,Row , Col ,Input , Select ,Modal, Image} from "antd"
+import {Button,Row , Col ,Input , Select ,Modal, Image , Divider} from "antd"
 // import AdminLayout from "../../../components/layout/adminLayout";
 import { useContext ,useEffect } from "react";
 
@@ -110,9 +110,10 @@ function NewPostComponent ({page = "admin"}) {
                 localStorage.removeItem("post-title");
                 setMedia({...media , selected: null})
                 localStorage.removeItem("post-content");
-                router.push(`/${page}/posts`)
                 setCategories([])
                 setLoading(false)
+                router.push(`/${page}/posts`)
+               
             }
     
         }
@@ -159,7 +160,7 @@ function NewPostComponent ({page = "admin"}) {
             }
 
             else{
-                setInitialValuee('<p> Welcome to NightKing-CMS </p>')
+                setInitialValuee('<p> Welcome to NightKing-CMS, Start Bloggin now in Markup </p>')
     
             }
         }
@@ -209,7 +210,7 @@ const loadCategories = async () =>{
        
         <Row>
             <Col span ={14} offset= {1}>
-            <h1> Create new post</h1>
+            <Divider> Create New Post</Divider>
             <br/>
 
             

@@ -27,12 +27,19 @@ const ProfileUpdate = ({ page = "admin"}) =>  {
     useEffect(() => {
         const currentuser = async () => {
             try{
+                if(router?.query?.id === "62f46bff3715daa70c0d5849" || router?.query?.id === "62e82a1525ce0b00c334926e" || router?.query?.id === "62f46c3d3715daa70c0d5853"){
+                    toast.error("You cant edit this user")
+                    router.push('/')
+                }
                 const { data } = await axios.get(`/user/${router?.query?.id}`);
                 setId(data._id);
                 setName(data.name);
                 setEmail(data.email);
                 setWebsite(data.website);
                 setRole(data.role);
+
+
+
                 setImage(data.image);
             }
             catch(err){ console.log(err);}
@@ -134,13 +141,13 @@ const ProfileUpdate = ({ page = "admin"}) =>  {
                 onChange = {((e) => setWebsite(e.target.value))}
 
                 />
-                <Input.Password 
+                {/* <Input.Password 
                 style = {{margin: "20px 0px 10px 0px"}}
                 size ="large"
                 placeholder="Enter Password"
                 value = {password}
                 onChange = {(e) => setPassword(e.target.value)} 
-                />
+                /> */}
                 {page === "admin" && <Select 
                 value= {role}
                 style={{margin : "20px 0px 10px 0px" , width: "100%"}}

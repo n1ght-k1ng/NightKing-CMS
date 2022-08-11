@@ -1,4 +1,4 @@
-import {Row , Col} from "antd"
+import {Row , Col , Divider} from "antd"
 import AdminLayout from "../../../components/layout/adminLayout";
 import UploadFile from "../../../components/media/UploadFile";
 
@@ -11,6 +11,9 @@ function newMedia () {
         <AdminLayout>
 
             <Row>
+                <Divider>
+                    Add new media
+                </Divider>
                 <Col span={24}>
                     <div style ={{padding: 100,
                     textAlign: 'center'}}>

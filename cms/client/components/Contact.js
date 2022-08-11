@@ -1,6 +1,6 @@
 import ToggleTheme from "../components/ToggleTheme";
 import { LockOutlined, UserOutlined , MailOutlined, DatabaseFilled  }  from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input , Divider } from 'antd';
 import React, { useContext, useState , useEffect} from 'react';
 import axios from 'axios'
 import {useRouter} from 'next/router'
@@ -46,7 +46,7 @@ const ContactForm = () => {
     return (
         <Row>
             <Col span={20} offset={2}>
-            <h1> Contact NightKing</h1>
+            <Divider><h2>Contact NightKing</h2></Divider>
       <Form
         form = { form }
         name="normal_login"

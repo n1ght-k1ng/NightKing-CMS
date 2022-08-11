@@ -310,7 +310,7 @@ export const UpdateComment = async (req, res) => {
 
 export const userComments = async (req, res) => {
     try{
-        const comments  = await Comment.find({postedBy : req.user.id})
+        const comments  = await Comment.find({postedBy : req.user._id})
         .populate('postedBy', 'name')
         .populate('postId' , 'title slug')
         .sort({createdAt: -1})

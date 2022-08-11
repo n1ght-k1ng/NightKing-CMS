@@ -259,6 +259,7 @@ export const deleteUser = async (req, res) => {
     }
     else{
       const del = await User.findByIdAndDelete(userid)
+      
     }
     
 

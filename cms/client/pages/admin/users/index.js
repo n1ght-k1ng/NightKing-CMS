@@ -1,6 +1,6 @@
 import { useState , useEffect, useContext} from "react";
 import AdminLayout from "../../../components/layout/adminLayout";
-import { Row , Col , List , Avatar, Input } from "antd"
+import { Row , Col , List , Avatar, Input , Divider} from "antd"
 import axios from 'axios'
 import {toast} from 'react-hot-toast'
 import {useRouter} from 'next/router'
@@ -32,9 +32,9 @@ const AllUsers = () => {
     const handleDelete = async (user) => {
         try{
 
-            if(user?._id === auth?.user?._id)
+            if(user?._id === auth?.user?._id || user?._id === "62f46bff3715daa70c0d5849" || user?._id === "62e82a1525ce0b00c334926e" || user?._id === "62f46c3d3715daa70c0d5853" )
             {
-                toast.error('Damn , dont delete yourself !!')
+                toast.error('you cant delete this user')
                 return
             }
             try {
@@ -57,14 +57,14 @@ const AllUsers = () => {
         catch(err) { console.log(err) }
     }
     const filteredUsers = users?.filter(user => user.name.toLowerCase().includes(keyword))
-
+    
 
     return (
         <AdminLayout>
             <Row>
                 <Col span= {24}>
 
-                <h4 > All Users ({users?.length}) </h4>
+                <Divider > All Users ({users?.length}) </Divider>
 
                
 
@@ -75,12 +75,14 @@ const AllUsers = () => {
                     dataSource = {filteredUsers}
                     renderItem = {(user) => (
 
-
+                        
                         <List.Item
-                        actions={[
-                            <Link href={`/admin/users/${user._id}`}><a>Edit</a></Link>,
 
-                            <a disabled ={user?._id === auth?.user?._id} onClick={() => handleDelete(user)}> delete </a>
+                        actions={[
+
+                            <Link href={`/admin/users/${user._id}`}><a disabled= {user?._id === "62f46bff3715daa70c0d5849" || user?._id === "62e82a1525ce0b00c334926e" || user?._id === "62f46c3d3715daa70c0d5853"  } >Edit</a></Link>,
+
+                            <a disabled ={user?._id === auth?.user?._id || user?._id === "62f46bff3715daa70c0d5849" || user?._id === "62e82a1525ce0b00c334926e" || user?._id === "62f46c3d3715daa70c0d5853" } onClick={() => handleDelete(user)}> delete </a>
 
     
 

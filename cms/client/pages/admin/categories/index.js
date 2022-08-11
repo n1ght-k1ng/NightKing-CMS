@@ -9,7 +9,7 @@ import {useState , useEffect , useContext } from 'react'
 // import ToggleTheme from "../../components/ToggleTheme";
 // const {Content , Sider} = Layout;
 import CategoryUpdateModal from "../../../components/modal/CategoryUpdateModal";
-import {Form , Input , Row , Col , List , Modal } from "antd"
+import {Form , Input , Row , Col , List , Divider} from "antd"
 import Item from "antd/lib/list/Item";
 // import { categories } from "../../../../server/controllers/category";
 // import { get } from "mongoose";
@@ -114,7 +114,7 @@ function Categories () {
         <Row>
             <Col span={12}>
                 {/* first column */}
-            <h1>Categories</h1>
+            <Divider>Categories</Divider>
         <p> Add new Category</p>
 
         <Form

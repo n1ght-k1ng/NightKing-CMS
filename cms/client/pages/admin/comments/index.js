@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect , useState , useContext} from 'react';
 // import { commentsContext } from '../../../context/comments';
-import { Button , Row , Col, List , Input  } from "antd";
+import { Button , Row , Col, List , Input , Divider  } from "antd";
 import AdminLayout from "../../../components/layout/adminLayout";
 import Link  from 'next/link'
 import { useRouter } from 'next/router';
@@ -102,7 +102,7 @@ const filteredComments = comments?.filter((comment) => comment.content.toLowerCa
             <Col span = {24}>
             
 
-                <h1 style ={{marginTop: 15 }}> {comments?.length} Comments </h1>
+                <Divider style ={{marginTop: 15 }}> {comments?.length} Comments </Divider>
 
                 <Input placeholder = "Search" type= 'search' value={keyword} onChange={e => setKeyword(e.target.value.toLowerCase())}/>
 

@@ -38,20 +38,25 @@ const FormSignin = () => {
         setAuth(data)
         // save user and token to local storage
         localStorage.setItem('auth',JSON.stringify(data))
-        toast.success("Successfully Signed In - Welcome to NightKing-CMS")
+        
         setloading(false)
         //redirect
         // router.push('/')
 
         if(data?.user?.role === 'Admin'){
-
+          toast.success("Successfully Signed In - Welcome to NightKing-CMS")
           router.push('/admin')
         } 
         else if (data?.user?.role === 'Author'){
+          toast.success("Successfully Signed In - Welcome to NightKing-CMS")
           router.push("/author")
         }
-        else {
+        else if (data?.user?.role === "Author") {
+          toast.success("Successfully Signed In - Welcome to NightKing-CMS")
           router.push('/subscriber')
+        }
+        else{
+          toast.error("Sign in failed")
         }
         form.resetFields()
         }

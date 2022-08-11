@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AdminLayout from "../../../components/layout/adminLayout";
-import {Row , Col , Button , Input , Checkbox , Select} from 'antd'
+import {Row , Col , Button , Input , Checkbox , Select ,Divider} from 'antd'
 import axios from 'axios';
 import {toast} from 'react-hot-toast'
 import { useRouter } from "next/router";
@@ -52,7 +52,7 @@ const NewUSer = () =>{
         <Row>
             <Col span={12} offset={6}>
                 {/* <h1>Form</h1> */}
-                <h4 style={{marginBottom: "-10px"}}>Add new user</h4>
+                <Divider style={{marginBottom: "-10px"}}>Add new user</Divider>
                 <Input 
                 style = {{margin: '20px 0px 10px 0px'}}
                 size = "large"

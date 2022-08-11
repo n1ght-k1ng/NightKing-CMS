@@ -1,14 +1,11 @@
-import {Button} from "antd"
-import AdminLayout from "../layout/adminLayout";
+
 import React from "react";
 import { useContext , useEffect ,useState } from "react";
 import {Upload  , message , Image , Badge} from "antd"
 import {CloseCircleOutlined, InboxOutlined} from "@ant-design/icons"
 import { AuthContext } from "../../context/auth";
-import ToggleTheme from "../ToggleTheme";
 import { MediaContext } from "../../context/media"
 import axios from "axios";
-import { set } from "mongoose";
 import {toast } from "react-hot-toast"
 
 // const {Content , Sider} = Layout;
@@ -68,7 +65,9 @@ function MediaLibrary ({ page = "admin"}) {
     const handleImageDelete = async(imageID)=>
     {
       try{
+
         const { data } = await axios.delete(`/media/${imageID}`);
+        console.log(data)
         if(data.ok){
           setMedia({
             ...media,

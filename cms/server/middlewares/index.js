@@ -110,6 +110,7 @@ export const canDeleteMedia = async (req, res, next) => {
         const media = await Media.findById(req.params.id)
         console.log("params " , media.postedBy.toString())
         console.log("user " , user._id.toString())
+        console.log("User role ", user.role)
        
         switch(user.role){
             case "Admin":

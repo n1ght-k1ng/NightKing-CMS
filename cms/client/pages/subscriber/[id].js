@@ -8,7 +8,7 @@ const UpdateUser =() =>{
 
     <SubscriberLayout>
         <ProfileUpdate page="user"/>
-        </SubscriberLayout>   
+    </SubscriberLayout>   
     )
 }
 

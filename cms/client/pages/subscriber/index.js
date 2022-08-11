@@ -9,8 +9,7 @@ function Subscriber () {
     return(
         <SubscriberLayout>
 
-        <h1> This is Subscriber Page props</h1>
-        <p> moreeee</p>
+        
         
 
         </SubscriberLayout>
