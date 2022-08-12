@@ -11,9 +11,13 @@ import  categoryRoutes from '../server/routes/category';
 import postRoutes from "../server/routes/post"
 import websiteRoutes from "../server/routes/website"
 
-const morgan = require("morgan"); // middle ware to print details "POST /api/signup 200 375.101 ms - 380"
+
+
+const morgan = require("morgan");
+const path = require("path") // middle ware to print details "POST /api/signup 200 375.101 ms - 380"
 
 const app = express();
+const http = require("http").createServer(app);
 
 // db connection
 mongoose
@@ -27,6 +31,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev")); 
 
+// deployment 
+__dirname = path.resolve()
+if(process.env.NODE_ENV === 'production')
+{
+ 
+  app.use(express.static(path.join(__dirname, '../client/.next/static/chunks/pages')))
+  app.get('*' , (req, res) => {
+    res.sendFile(path.join(__dirname,'..' ,'client', '.next', 'static','chunks','pages', 'index.js'))
+  })
+}
+else{
+  app.get("/" , (req, res) => {
+    res.send("Api running")
+  })
+
+}
 
 
 // route middlewares
@@ -35,4 +55,9 @@ app.use("/api", categoryRoutes)
 app.use("/api", postRoutes)
 app.use("/api", websiteRoutes)    // category routes are now part of the endpoints
 
-app.listen(8000, () => console.log("Server running on port 8000"));
+
+const port = process.env.PORT || 8000;
+
+http.listen(port, () => console.log("Server running on port 8000"));
+
+// heyy
