@@ -2,6 +2,9 @@
 
 A Content Management System Web Application built on MERN (MongoDB ExpressJs ReactJs NodeJS) Stack. The UI has been built using ANT Design.
 
+![image](https://user-images.githubusercontent.com/77714082/184510047-9005bda6-8bbe-4bac-ad87-8091be58299b.png)
+
+
 
 
 **It has now been deployed**
