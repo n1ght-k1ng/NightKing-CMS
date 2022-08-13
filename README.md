@@ -10,7 +10,7 @@ A Content Management System Web Application built on MERN (MongoDB ExpressJs Rea
 ## Details 
 
 
-* This client side of this project is build on Next.js.
+* The client side of this project is build on Next.js.
 * Authentication uses Express for authentication and route handling.
 * API - [NightKing-CMS API](https://nightking-cms.herokuapp.com/api)
 * NightKing-CMS stores all the data in a MongoDB database,
