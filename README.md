@@ -1,5 +1,7 @@
 # NightKing-CMS 
 
+**IMPORTANT - This project leverages the free tier of Render for backend hosting, as the previously available free tier on Heroku has been discontinued. Users may experience a latency of up to 30 seconds for the API data to manifest on the screen.**
+
 A Content Management System Web Application built on MERN (MongoDB ExpressJs ReactJs NodeJS) Stack. The UI has been built using ANT Design.
 
 ![image](https://user-images.githubusercontent.com/77714082/184510047-9005bda6-8bbe-4bac-ad87-8091be58299b.png)
